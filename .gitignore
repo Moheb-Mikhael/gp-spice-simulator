@@ -1,0 +1,8 @@
+# Build artifacts
+sim/build/
+*.wasm
+node_modules/
+
+# OS
+.DS_Store
+Thumbs.db

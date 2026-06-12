@@ -3,11 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
     <title>SPICE Web Simulator</title>
     <meta name="description" content="A powerful SPICE circuit simulator running entirely in your browser via WebAssembly. No server needed.">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/echarts@5.5.0/dist/echarts.min.js"></script>
-    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="index.css?v=2">
 </head>
 <body>
     <header id="header">
@@ -62,7 +65,7 @@
         Powered by WebAssembly • All computation runs locally in your browser
     </footer>
 
-    <script src="./spice_engine.js"></script>
-    <script src="app.js"></script>
+    <script src="./spice_engine.js?v=2"></script>
+    <script src="app.js?v=2"></script>
 </body>
 </html>
