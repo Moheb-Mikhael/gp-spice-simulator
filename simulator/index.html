@@ -1,28 +1,36 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
-    <title>SPICE Web Simulator</title>
+    <title>SPICE Simulator — SPICE Suite</title>
     <meta name="description" content="A powerful SPICE circuit simulator running entirely in your browser via WebAssembly. No server needed.">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/echarts@5.5.0/dist/echarts.min.js"></script>
-    <link rel="stylesheet" href="index.css?v=2">
+    <link rel="stylesheet" href="index.css?v=3">
 </head>
 <body>
     <header id="header">
         <div class="logo-area">
-            <h1>SPICE Web Simulator</h1>
-            <span class="subtitle">Circuit Simulation in Your Browser</span>
+            <span class="brand-accent">&#x25B3;</span>
+            <h1>SPICE <span class="brand-em">Simulator</span></h1>
         </div>
+        <nav class="header-nav">
+            <a href="../index.html" class="header-link">Home</a>
+            <button id="theme-toggle" class="theme-btn" aria-label="Toggle theme">
+                <span class="icon-light">&#x2600;</span>
+                <span class="icon-dark">&#x263E;</span>
+            </button>
+        </nav>
     </header>
 
     <div id="toolbar">
         <button id="btn-run" class="btn btn-primary" disabled>
-            <span class="icon">▶</span> Run Simulation
+            <span class="icon">&#x25B6;</span> Run Simulation
         </button>
         <select id="select-example">
             <option value="" disabled selected>Load Example...</option>
@@ -62,10 +70,11 @@
     </main>
 
     <footer id="footer">
-        Powered by WebAssembly • All computation runs locally in your browser
+        <span>SPICE Suite &middot; Open source &middot; Made with <span class="heart">&#x2764;</span> in Egypt</span>
+        <span class="footer-tech">WebAssembly &middot; All computation runs locally in your browser</span>
     </footer>
 
-    <script src="./spice_engine.js?v=2"></script>
-    <script src="app.js?v=2"></script>
+    <script src="./spice_engine.js?v=3"></script>
+    <script src="app.js?v=3"></script>
 </body>
 </html>
