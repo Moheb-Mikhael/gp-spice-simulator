@@ -1,68 +1,360 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SPICE Web Simulator</title>
-    <meta name="description" content="A powerful SPICE circuit simulator running entirely in your browser via WebAssembly. No server needed.">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono&display=swap" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/echarts@5.5.0/dist/echarts.min.js"></script>
-    <link rel="stylesheet" href="index.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SPICE Post-Processing Suite — EDA for Egypt</title>
+  <meta name="description" content="An open-source SPICE circuit simulation and post-processing platform. Built for Egyptian students, by students — advancing Electronic Design Automation.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <header id="header">
-        <div class="logo-area">
-            <h1>SPICE Web Simulator</h1>
-            <span class="subtitle">Circuit Simulation in Your Browser</span>
-        </div>
-    </header>
 
-    <div id="toolbar">
-        <button id="btn-run" class="btn btn-primary" disabled>
-            <span class="icon">▶</span> Run Simulation
-        </button>
-        <select id="select-example">
-            <option value="" disabled selected>Load Example...</option>
-            <option value="rc_lowpass">RC Low-Pass Filter (Transient)</option>
-            <option value="rlc_bandpass">RLC Band-Pass Filter (AC Bode)</option>
-            <option value="diode_iv">Diode I-V Curve (DC Sweep)</option>
-        </select>
-        <button id="btn-clear" class="btn btn-secondary">Clear Output</button>
-        <div id="status-indicator" class="status-loading">Loading WebAssembly...</div>
+  <!-- ======== NAVBAR ======== -->
+  <nav id="navbar">
+    <div class="nav-inner">
+      <div class="nav-brand">
+        <span class="brand-accent">&#x25B3;</span>
+        SPICE <span class="brand-accent">Suite</span>
+      </div>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#about">About</a></li>
+        <li><a href="#vision">Vision</a></li>
+        <li><a href="#tool">Tool</a></li>
+        <li><a href="#search">Search</a></li>
+        <li><a href="#tutorials">Tutorials</a></li>
+        <li><a href="#qa">Q&amp;A</a></li>
+        <li><a href="simulator/index.html" target="_blank" class="nav-cta">Launch Simulator &rarr;</a></li>
+      </ul>
+      <button class="mobile-toggle" id="mobileToggle" aria-label="Menu">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M3 12h18M3 6h18M3 18h18"/>
+        </svg>
+      </button>
+    </div>
+  </nav>
+
+  <!-- ======== HERO ======== -->
+  <section id="hero">
+    <div class="hero-content">
+      <h1>
+        Shape the Future of<br>
+        Electronic Design &mdash; <span class="highlight">from Egypt</span>
+      </h1>
+      <p class="hero-subtitle">
+        An open-source SPICE post-processing platform.<br>
+        Available on Web, Windows, and Linux.<br>
+        Built for students, by students &mdash; to put Egyptian engineering on the EDA map.
+      </p>
+      <div class="hero-actions">
+        <a href="simulator/index.html" target="_blank" class="btn btn-primary">Launch the Simulator &rarr;</a>
+        <a href="#vision" class="btn btn-secondary">Our Vision</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======== ABOUT ======== -->
+  <section id="about" class="section">
+    <div class="section-header">
+      <h2>About the Tool</h2>
+      <div class="section-divider"></div>
+      <p>A complete SPICE post-processing suite for Web, Windows, and Linux.</p>
+    </div>
+    <div class="about-grid">
+      <div class="about-card">
+        <div class="icon">&#x1F4CA;</div>
+        <h3>Waveform Database</h3>
+        <p>Load, inspect, and manage simulation data with a built-in WaveformDB. List signals, view metadata, and switch between multiple datasets seamlessly.</p>
+      </div>
+      <div class="about-card">
+        <div class="icon">&#x2699;</div>
+        <h3>Measurement Engine</h3>
+        <p>Measure rise time, fall time, period, frequency, delay, peak-to-peak, RMS, average, and more. Window your analysis with <code>from</code> &hellip; <code>to</code>.</p>
+      </div>
+      <div class="about-card">
+        <div class="icon">&#x2B50;</div>
+        <h3>Built-In Calculator</h3>
+        <p>Evaluate arithmetic expressions on waveforms. Supports <code>+</code>, <code>-</code>, <code>*</code>, <code>/</code>, trigonometric functions, logarithms, and reduction functions.</p>
+      </div>
+      <div class="about-card">
+        <div class="icon">&#x1F4DD;</div>
+        <h3>Export &amp; Plot</h3>
+        <p>Export data to CSV, generate publication-ready plots with custom titles, and save as PNG. All computation runs locally via WebAssembly.</p>
+      </div>
+      <div class="about-card">
+        <div class="icon">&#x1F5A5;</div>
+        <h3>Cross-Platform</h3>
+        <p>Use the desktop app on Windows or Linux for native performance, or access the full post-processing suite directly in your browser via WebAssembly. Same engine, every platform.</p>
+      </div>
+      <div class="about-card">
+        <div class="icon">&#x1F3EB;</div>
+        <h3>Open Source</h3>
+        <p>Study every layer &mdash; from the netlist parser to the plotting engine. Contribute, modify, and build your own EDA tools on top of it.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======== VISION ======== -->
+  <section id="vision" class="section">
+    <div class="section-header">
+      <h2>Our Vision</h2>
+      <div class="section-divider"></div>
+      <p>Why we built this, and where we&rsquo;re going.</p>
+    </div>
+    <div class="vision-content">
+      <blockquote>
+        &ldquo;Electronic Design Automation is the backbone of modern technology &mdash; yet the tools that shape it are rarely built by the engineers who will use them tomorrow. We believe Egyptian students can and should be part of that conversation.&rdquo;
+      </blockquote>
+      <p>
+        This platform is our first step. A fully open-source SPICE simulation and post-processing environment that
+        runs on Web, Windows, and Linux, requires nothing to install, and invites you to look under the hood.
+      </p>
+      <p>
+        We want every Egyptian engineering student to see that EDA is not a black box. You can understand it.
+        You can improve it. You can build the next generation of tools that the world&rsquo;s engineers will rely on.
+      </p>
+      <p>
+        Contribute on GitHub. Share it with your classmates. Fork it, break it, fix it, make it yours.
+        <br><strong>This is just the beginning.</strong>
+      </p>
+      <div style="margin-top: 28px;">
+        <a href="simulator/index.html" target="_blank" class="btn btn-primary">Try the Simulator &rarr;</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======== TOOL SECTION ======== -->
+  <section id="tool" class="section">
+    <div class="section-header">
+      <h2>Get the Tool</h2>
+      <div class="section-divider"></div>
+      <p>Choose your platform &mdash; web, Windows, or Linux. Same engine, same workflow.</p>
+    </div>
+    <div class="about-grid" style="margin-bottom: 48px;">
+
+      <div class="about-card" style="text-align: center;">
+        <div class="icon" style="margin: 0 auto 18px;">&#x1F310;</div>
+        <h3>Web (WASM)</h3>
+        <p>Launch the full post-processing suite directly in your browser. No install, no account. Runs locally via WebAssembly.</p>
+        <div style="margin-top: 20px;">
+          <a href="simulator/index.html" target="_blank" class="btn btn-primary" style="font-size:0.85rem;padding:10px 24px;">Launch in Browser &rarr;</a>
+        </div>
+      </div>
+
+      <div class="about-card" style="text-align: center;">
+        <div class="icon" style="margin: 0 auto 18px;">&#x1F5A5;</div>
+        <h3>Windows</h3>
+        <p>Native Windows application. No browser needed. Download the installer for the best desktop experience.</p>
+        <div style="margin-top: 20px;">
+          <span class="btn btn-secondary" style="font-size:0.85rem;padding:10px 24px;opacity:0.6;cursor:default;">Download &mdash; Coming Soon</span>
+        </div>
+      </div>
+
+      <div class="about-card" style="text-align: center;">
+        <div class="icon" style="margin: 0 auto 18px;">&#x1F427;</div>
+        <h3>Linux</h3>
+        <p>Native Linux build. Run the simulation engine and post-processor natively on your distribution.</p>
+        <div style="margin-top: 20px;">
+          <span class="btn btn-secondary" style="font-size:0.85rem;padding:10px 24px;opacity:0.6;cursor:default;">Download &mdash; Coming Soon</span>
+        </div>
+      </div>
+
     </div>
 
-    <main id="main-content">
-        <section id="editor-pane">
-            <div class="tab-bar">
-                <div class="tab active">Netlist</div>
-            </div>
-            <div class="editor-container">
-                <div id="line-numbers">1</div>
-                <textarea id="netlist-editor" spellcheck="false" wrap="off"></textarea>
-            </div>
-        </section>
+    <div class="tool-quickstart" style="max-width: 700px; margin: 0 auto;">
+      <h4>Quick-start netlist &mdash; copy and run (any platform)</h4>
+      <pre><code>* RC Low-Pass Filter
+V1 in 0 DC 5 AC 1
+R1 in out 1k
+C1 out 0 1u
+.control
+  tran 0.1m 5m
+  plot time V(in) V(out)
+.endc
+.end</code></pre>
+    </div>
+  </section>
 
-        <div id="resize-handle"></div>
+  <!-- ======== SEARCH ======== -->
+  <section id="search" class="section">
+    <div class="section-header">
+      <h2>Search Documentation</h2>
+      <div class="section-divider"></div>
+      <p>Look up SPICE commands, measurement functions, and calculator operations.</p>
+    </div>
+    <div class="search-container">
+      <p class="search-scope">&#x1F50D; Tool-specific documentation &mdash; SPICE post-processing commands only</p>
+      <div class="search-box">
+        <span class="search-icon">&#x1F50E;</span>
+        <input type="text" id="searchInput" placeholder="Search commands, syntax, or categories..." autocomplete="off">
+      </div>
+      <div class="search-results" id="searchResults"></div>
+    </div>
+  </section>
 
-        <section id="output-pane">
-            <div class="tab-bar">
-                <div id="tab-console" class="tab active">Console</div>
-                <div id="tab-plot" class="tab">Plot</div>
+  <!-- ======== TUTORIALS ======== -->
+  <section id="tutorials" class="section">
+    <div class="section-header">
+      <h2>Tutorials</h2>
+      <div class="section-divider"></div>
+      <p>Learn circuit simulation and post-processing step by step.</p>
+    </div>
+    <div class="tutorial-filters" id="tutorialFilters">
+      <button class="active" data-filter="all">All</button>
+      <button data-filter="circuit">Circuit Analysis</button>
+      <button data-filter="postproc">Post-Processing</button>
+      <button data-filter="calculator">Calculator</button>
+    </div>
+    <div class="tutorial-grid" id="tutorialGrid">
+
+      <div class="tutorial-card" data-tags="circuit">
+        <div class="card-media">
+          <div class="placeholder-vid">
+            <div>
+              <div style="font-size:1.5rem;margin-bottom:6px;">&#x25B6;</div>
+              <div>MIT OCW — Circuit Analysis</div>
             </div>
-            <div class="output-container">
-                <pre id="console-output"></pre>
-                <div id="plot-container" style="display: none;">
-                    <div id="chart" style="width: 100%; height: 100%;"></div>
-                </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <span class="card-tag">Circuit Analysis</span>
+          <h4>Introduction to Circuit Simulation</h4>
+          <p>Fundamentals of SPICE netlists, component models, and running your first transient analysis.</p>
+        </div>
+      </div>
+
+      <div class="tutorial-card" data-tags="circuit">
+        <div class="card-media">
+          <div class="placeholder-vid">
+            <div>
+              <div style="font-size:1.5rem;margin-bottom:6px;">&#x25B6;</div>
+              <div>MIT OCW — MOSFETs</div>
             </div>
-        </section>
-    </main>
+          </div>
+        </div>
+        <div class="card-body">
+          <span class="card-tag">Circuit Analysis</span>
+          <h4>MOSFET I-V Characteristics &amp; DC Sweep</h4>
+          <p>Use DC sweep analysis to plot MOSFET drain current vs. gate voltage. Understand weak to strong inversion.</p>
+        </div>
+      </div>
 
-    <footer id="footer">
-        Powered by WebAssembly • All computation runs locally in your browser
-    </footer>
+      <div class="tutorial-card" data-tags="postproc">
+        <div class="card-media">
+          <div class="placeholder-vid">
+            <div>
+              <div style="font-size:1.5rem;margin-bottom:6px;">&#x25B6;</div>
+              <div>MIT OCW — Op-Amps</div>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <span class="card-tag">Post-Processing</span>
+          <h4>Plotting &amp; Measuring Amplifier Response</h4>
+          <p>Run a transient analysis on an op-amp circuit, plot input/output, and measure rise time and delay.</p>
+        </div>
+      </div>
 
-    <script src="./spice_engine.js"></script>
-    <script src="app.js"></script>
+      <div class="tutorial-card" data-tags="postproc">
+        <div class="card-media">
+          <div class="placeholder-vid">
+            <div>
+              <div style="font-size:1.5rem;margin-bottom:6px;">&#x25B6;</div>
+              <div>MIT OCW — Bode Plots</div>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <span class="card-tag">Post-Processing</span>
+          <h4>AC Analysis &amp; Bode Plot Generation</h4>
+          <p>Set up an AC sweep, use <code>db()</code> to convert magnitude, and export publication-ready plots.</p>
+        </div>
+      </div>
+
+      <div class="tutorial-card" data-tags="calculator">
+        <div class="card-media">
+          <div class="placeholder-vid">
+            <div>
+              <div style="font-size:1.5rem;margin-bottom:6px;">&#x25B6;</div>
+              <div>MIT OCW — Signals</div>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <span class="card-tag">Calculator</span>
+          <h4>Waveform Math with the calc Engine</h4>
+          <p>Add, subtract, multiply signals. Use <code>abs()</code>, <code>sqrt()</code>, and reduction functions to extract scalar values.</p>
+        </div>
+      </div>
+
+      <div class="tutorial-card" data-tags="calculator">
+        <div class="card-media">
+          <div class="placeholder-vid">
+            <div>
+              <div style="font-size:1.5rem;margin-bottom:6px;">&#x270D;</div>
+              <div>Written Guide</div>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <span class="card-tag">Calculator</span>
+          <h4>Coming Soon: calc Reference Guide</h4>
+          <p>A deep dive into every calc operator, element-wise function, and reduction with real circuit examples.</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ======== Q&A ======== -->
+  <section id="qa" class="section">
+    <div class="section-header">
+      <h2>Community Q&amp;A</h2>
+      <div class="section-divider"></div>
+      <p>Ask questions, share knowledge, and grow together.</p>
+    </div>
+    <div class="qa-container">
+      <p>
+        Have a question about a SPICE command? Stuck on a measurement? Want to suggest a feature?
+        Our community Q&amp;A is the safest place to ask. Every question helps someone else learn.
+      </p>
+      <div class="qa-embed">
+        <div class="placeholder-icon">&#x1F4AC;</div>
+        <h4>GitHub Discussions — Coming Soon</h4>
+        <p>
+          We&rsquo;re setting up a dedicated Q&amp;A space on GitHub Discussions.
+          In the meantime, reach out to us directly and we&rsquo;ll add your question to the archive.
+        </p>
+        <a href="mailto:spice-suite@example.com" class="btn btn-secondary">Get in Touch &rarr;</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======== FOOTER ======== -->
+  <footer id="footer">
+    <div class="footer-inner">
+      <div class="footer-links">
+        <a href="#about">About</a>
+        <a href="#vision">Vision</a>
+        <a href="#tool">Tool</a>
+        <a href="#search">Search</a>
+        <a href="#tutorials">Tutorials</a>
+        <a href="#qa">Q&amp;A</a>
+        <a href="simulator/index.html" target="_blank">Launch Simulator</a>
+      </div>
+      <div class="footer-brand">SPICE Post-Processing Suite</div>
+      <div class="footer-tagline">
+        Open source &middot; Community-driven &middot; Made with <span class="heart">love</span> in Egypt
+      </div>
+      <div class="footer-copy">
+        &copy; 2026 SPICE Suite Contributors. Available on Web (WASM) &middot; Windows &middot; Linux
+      </div>
+    </div>
+  </footer>
+
+  <script src="data/commands.json" id="commands-data" type="application/json"></script>
+  <script src="js/main.js"></script>
 </body>
 </html>

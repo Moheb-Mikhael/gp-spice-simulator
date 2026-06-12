@@ -19,7 +19,7 @@ L1 1 out 1m
 C1 out 0 10n
 .control
 ac dec 100 1k 1Meg
-plot V(out)
+plot V(in) V(out)
 .endc
 .end`,
     'diode_iv': `* Diode I-V Curve
@@ -28,7 +28,7 @@ D1 n1 0 1N4148
 .model 1N4148 D(Is=2.52n Rs=0.568 N=1.752 Cjo=4p M=0.333 tt=20n Ikv=1000)
 .control
 dc V1 -1 1 0.01
-plot I(V1)
+plot V(in) V(out)
 .endc
 .end`
 };

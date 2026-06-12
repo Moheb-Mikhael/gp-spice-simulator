@@ -1,0 +1,343 @@
+[
+  {
+    "name": "source",
+    "aliases": ["run"],
+    "syntax": "source <file.cir>",
+    "description": "Executes a SPICE netlist simulation and automatically loads the generated raw output files into the current database session.",
+    "category": "System",
+    "example": "source my_circuit.cir"
+  },
+  {
+    "name": "run",
+    "aliases": ["source"],
+    "syntax": "run <file.cir>",
+    "description": "Alternative syntax for source. Executes a SPICE netlist simulation.",
+    "category": "System",
+    "example": "run my_circuit.cir"
+  },
+  {
+    "name": "help",
+    "syntax": "help",
+    "description": "Prints the built-in summary of all commands available in the interpreter.",
+    "category": "System",
+    "example": "help"
+  },
+  {
+    "name": "exit",
+    "aliases": ["quit", "q"],
+    "syntax": "exit",
+    "description": "Terminates the interactive REPL session and exits the post-processor.",
+    "category": "System",
+    "example": "exit"
+  },
+  {
+    "name": "quit",
+    "aliases": ["exit", "q"],
+    "syntax": "quit",
+    "description": "Terminates the interactive REPL session and exits the post-processor.",
+    "category": "System",
+    "example": "quit"
+  },
+  {
+    "name": "q",
+    "aliases": ["exit", "quit"],
+    "syntax": "q",
+    "description": "Short alias for exit/quit. Terminates the REPL session.",
+    "category": "System",
+    "example": "q"
+  },
+  {
+    "name": "load",
+    "syntax": "load <file.raw>",
+    "description": "Explicitly loads a SPICE raw file into the Waveform Database. Multiple files can be loaded; each is stored as a separate record.",
+    "category": "Database",
+    "example": "load simulation/tran.raw"
+  },
+  {
+    "name": "db",
+    "aliases": ["records"],
+    "syntax": "db",
+    "description": "Lists all datasets (records) currently loaded in memory. Shows the tag/name for each record.",
+    "category": "Database",
+    "example": "db"
+  },
+  {
+    "name": "records",
+    "aliases": ["db"],
+    "syntax": "records",
+    "description": "Alternative name for db. Lists all datasets currently loaded in memory.",
+    "category": "Database",
+    "example": "records"
+  },
+  {
+    "name": "info",
+    "syntax": "info [tag]",
+    "description": "Prints metadata header of a specific record. If no tag is provided, defaults to the most recently loaded record. Shows Title, Date, Plotname, Type, Number of Points, and X-axis name.",
+    "category": "Database",
+    "example": "info tran1"
+  },
+  {
+    "name": "list",
+    "syntax": "list [tag]",
+    "description": "Lists every signal variable stored within a record. Shows signal name, number of points, and marks the X-axis signal.",
+    "category": "Database",
+    "example": "list ac1"
+  },
+  {
+    "name": "print",
+    "syntax": "print <signal> [signal2 ...]",
+    "description": "Outputs raw numerical values of one or more signals to the console in a formatted, aligned table.",
+    "category": "Export",
+    "example": "print time V(in) V(out)"
+  },
+  {
+    "name": "export",
+    "syntax": "export --csv <out.csv> [sig1 sig2 ...]",
+    "description": "Exports selected signals to a Comma-Separated Values (CSV) file. If no signals provided, exports all signals from the most recently loaded record.",
+    "category": "Export",
+    "example": "export --csv all_data.csv"
+  },
+  {
+    "name": "plot",
+    "syntax": "plot <xsig> <ysig> [ysig2 ...] [--out file.png] [--title \"Title Text\"]",
+    "description": "Generates visual graphs using the PlotEngine. First signal is the X-axis; subsequent signals are plotted on the Y-axis. Supports saving to PNG and custom titles.",
+    "category": "Plotting",
+    "example": "plot time V(in) V(out) --title \"Transient Response\" --out response.png"
+  },
+  {
+    "name": "meas max",
+    "syntax": "meas max <signal> [from <t1> to <t2>]",
+    "description": "Finds the absolute maximum value of a signal within an optional time window.",
+    "category": "Measurement",
+    "example": "meas max V(out) from 10n to 50n"
+  },
+  {
+    "name": "meas min",
+    "syntax": "meas min <signal> [from <t1> to <t2>]",
+    "description": "Finds the absolute minimum value of a signal within an optional time window.",
+    "category": "Measurement",
+    "example": "meas min V(out)"
+  },
+  {
+    "name": "meas ptp",
+    "syntax": "meas ptp <signal> [from <t1> to <t2>]",
+    "description": "Calculates the Peak-to-Peak difference (maximum value minus minimum value) of a signal.",
+    "category": "Measurement",
+    "example": "meas ptp V(out)"
+  },
+  {
+    "name": "meas avg",
+    "aliases": ["meas mean"],
+    "syntax": "meas avg <signal> [from <t1> to <t2>]",
+    "description": "Calculates the arithmetic mean (average) of all data points in a signal.",
+    "category": "Measurement",
+    "example": "meas avg V(out)"
+  },
+  {
+    "name": "meas mean",
+    "aliases": ["meas avg"],
+    "syntax": "meas mean <signal> [from <t1> to <t2>]",
+    "description": "Alternative name for avg. Calculates the arithmetic mean of a signal.",
+    "category": "Measurement",
+    "example": "meas mean V(out)"
+  },
+  {
+    "name": "meas rms",
+    "syntax": "meas rms <signal> [from <t1> to <t2>]",
+    "description": "Calculates the Root Mean Square of a signal. Useful for power and AC equivalent calculations.",
+    "category": "Measurement",
+    "example": "meas rms V(out)"
+  },
+  {
+    "name": "meas trise",
+    "syntax": "meas trise <signal> [10% hi%]",
+    "description": "Calculates the Rise Time — time difference between low and high percentage thresholds on the first rising edge. Defaults to 10%-90%.",
+    "category": "Measurement",
+    "example": "meas trise V(out) 20 80"
+  },
+  {
+    "name": "meas tfall",
+    "syntax": "meas tfall <signal> [lo% hi%]",
+    "description": "Calculates the Fall Time on the first falling edge. Defaults to 90%-10%.",
+    "category": "Measurement",
+    "example": "meas tfall V(out) 90 10"
+  },
+  {
+    "name": "meas cross",
+    "syntax": "meas cross <signal> <level> [rise|fall]",
+    "description": "Finds the exact X-axis value when a signal crosses a specific level. Can filter for rising or falling edges.",
+    "category": "Measurement",
+    "example": "meas cross V(out) 2.5 rise"
+  },
+  {
+    "name": "meas period",
+    "syntax": "meas period <signal> [level]",
+    "description": "Calculates the time difference between two consecutive rising crossings of a specific level. Defaults to 50% midpoint if level omitted.",
+    "category": "Measurement",
+    "example": "meas period V(clock) 1.5"
+  },
+  {
+    "name": "meas freq",
+    "syntax": "meas freq <signal> [level]",
+    "description": "Calculates the frequency of a signal as 1/period.",
+    "category": "Measurement",
+    "example": "meas freq V(clock)"
+  },
+  {
+    "name": "meas delay",
+    "syntax": "meas delay <sigin> <sigout>",
+    "description": "Calculates the propagation delay between two signals by comparing their 50% crossing points.",
+    "category": "Measurement",
+    "example": "meas delay V(in) V(out)"
+  },
+  {
+    "name": "meas find",
+    "aliases": ["meas when"],
+    "syntax": "meas find <sig_y> when <sig_x>=<val> [cross=N]",
+    "description": "Finds the exact value of one signal at the moment another signal equals a specified value. Uses interpolation for precise results.",
+    "category": "Measurement",
+    "example": "meas find V(out) when time=15n"
+  },
+  {
+    "name": "calc",
+    "syntax": "calc <expression>",
+    "description": "Evaluates complex mathematical expressions. Waveform results are saved back into the database as expr_1, expr_2, etc. Supports operators, element-wise functions, and reduction functions.",
+    "category": "Calculator",
+    "example": "calc V(in) - V(out)"
+  },
+  {
+    "name": "calc +",
+    "syntax": "calc <a> + <b>",
+    "description": "Addition operator. Can operate on two waveforms (index-by-index) or a waveform and a scalar.",
+    "category": "Calculator",
+    "example": "calc V(node1) + V(node2)"
+  },
+  {
+    "name": "calc -",
+    "syntax": "calc <a> - <b>",
+    "description": "Subtraction operator. Can operate on two waveforms or a waveform and a scalar.",
+    "category": "Calculator",
+    "example": "calc V(in) - V(out)"
+  },
+  {
+    "name": "calc *",
+    "syntax": "calc <a> * <b>",
+    "description": "Multiplication operator. Supports waveform-waveform and waveform-scalar operations.",
+    "category": "Calculator",
+    "example": "calc V(out) * 2.5"
+  },
+  {
+    "name": "calc /",
+    "syntax": "calc <a> / <b>",
+    "description": "Division operator. Supports waveform-waveform and waveform-scalar operations.",
+    "category": "Calculator",
+    "example": "calc V(out) / 2"
+  },
+  {
+    "name": "calc abs",
+    "syntax": "calc abs(x)",
+    "description": "Element-wise absolute value function. Returns a new waveform where each point is the absolute value of the input.",
+    "category": "Calculator",
+    "example": "calc abs(V(out))"
+  },
+  {
+    "name": "calc sqrt",
+    "syntax": "calc sqrt(x)",
+    "description": "Element-wise square root function.",
+    "category": "Calculator",
+    "example": "calc sqrt(V(out))"
+  },
+  {
+    "name": "calc db",
+    "syntax": "calc db(x)",
+    "description": "Converts a signal to decibels using 20 * log10(|x|). Useful for Bode plot magnitude.",
+    "category": "Calculator",
+    "example": "calc db(V(out) / V(in))"
+  },
+  {
+    "name": "calc log",
+    "syntax": "calc log(x)",
+    "description": "Element-wise base-10 logarithm.",
+    "category": "Calculator",
+    "example": "calc log(V(out))"
+  },
+  {
+    "name": "calc ln",
+    "syntax": "calc ln(x)",
+    "description": "Element-wise natural logarithm (base-e).",
+    "category": "Calculator",
+    "example": "calc ln(V(out))"
+  },
+  {
+    "name": "calc exp",
+    "syntax": "calc exp(x)",
+    "description": "Element-wise exponential function (e^x).",
+    "category": "Calculator",
+    "example": "calc exp(V(out))"
+  },
+  {
+    "name": "calc neg",
+    "syntax": "calc neg(x)",
+    "description": "Element-wise negation (-x).",
+    "category": "Calculator",
+    "example": "calc neg(V(out))"
+  },
+  {
+    "name": "calc sin",
+    "syntax": "calc sin(x)",
+    "description": "Element-wise sine trigonometric function.",
+    "category": "Calculator",
+    "example": "calc sin(V(out))"
+  },
+  {
+    "name": "calc cos",
+    "syntax": "calc cos(x)",
+    "description": "Element-wise cosine trigonometric function.",
+    "category": "Calculator",
+    "example": "calc cos(V(out))"
+  },
+  {
+    "name": "calc tan",
+    "syntax": "calc tan(x)",
+    "description": "Element-wise tangent trigonometric function.",
+    "category": "Calculator",
+    "example": "calc tan(V(out))"
+  },
+  {
+    "name": "calc max",
+    "syntax": "calc max(x)",
+    "description": "Reduction function that finds the maximum value of a waveform, collapsing it to a scalar.",
+    "category": "Calculator",
+    "example": "calc max(V(out))"
+  },
+  {
+    "name": "calc min",
+    "syntax": "calc min(x)",
+    "description": "Reduction function that finds the minimum value of a waveform, collapsing it to a scalar.",
+    "category": "Calculator",
+    "example": "calc min(V(out))"
+  },
+  {
+    "name": "calc avg",
+    "aliases": ["calc mean"],
+    "syntax": "calc avg(x)",
+    "description": "Reduction function that calculates the average value of a waveform, collapsing it to a scalar.",
+    "category": "Calculator",
+    "example": "calc avg(V(out))"
+  },
+  {
+    "name": "calc mean",
+    "aliases": ["calc avg"],
+    "syntax": "calc mean(x)",
+    "description": "Alternative name for avg reduction function.",
+    "category": "Calculator",
+    "example": "calc mean(V(out))"
+  },
+  {
+    "name": "calc rms",
+    "syntax": "calc rms(x)",
+    "description": "Reduction function that calculates the Root Mean Square of a waveform, collapsing it to a scalar.",
+    "category": "Calculator",
+    "example": "calc rms(V(out)) / sqrt(2)"
+  }
+]
