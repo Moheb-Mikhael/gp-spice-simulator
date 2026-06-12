@@ -1,80 +1,104 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="light">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-    <meta http-equiv="Pragma" content="no-cache">
-    <meta http-equiv="Expires" content="0">
-    <title>SPICE Simulator — SPICE Suite</title>
-    <meta name="description" content="A powerful SPICE circuit simulator running entirely in your browser via WebAssembly. No server needed.">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/echarts@5.5.0/dist/echarts.min.js"></script>
-    <link rel="stylesheet" href="index.css?v=3">
+<head>    
+<meta charset="UTF-8">    
+<meta name="viewport" content="width=device-width, initial-scale=1.0">    
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">    
+<meta http-equiv="Pragma" content="no-cache">    
+<meta http-equiv="Expires" content="0">    
+<title>SPICE Simulator — SPICE Suite
+</title>    
+<meta name="description" content="A powerful SPICE circuit simulator running entirely in your browser via WebAssembly. No server needed.">    
+<link rel="preconnect" href="https://fonts.googleapis.com">    
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">    
+<script src="https://cdn.jsdelivr.net/npm/echarts@5.5.0/dist/echarts.min.js">
+</script>    
+<link rel="stylesheet" href="index.css?v=5">
 </head>
-<body>
-    <header id="header">
-        <div class="logo-area">
-            <span class="brand-accent">&#x25B3;</span>
-            <h1>SPICE <span class="brand-em">Simulator</span></h1>
-        </div>
-        <nav class="header-nav">
-            <a href="../index.html" class="header-link">Home</a>
-            <button id="theme-toggle" class="theme-btn" aria-label="Toggle theme">
-                <span class="icon-light">&#x2600;</span>
-                <span class="icon-dark">&#x263E;</span>
-            </button>
-        </nav>
-    </header>
-
-    <div id="toolbar">
-        <button id="btn-run" class="btn btn-primary" disabled>
-            <span class="icon">&#x25B6;</span> Run Simulation
-        </button>
-        <select id="select-example">
-            <option value="" disabled selected>Load Example...</option>
-            <option value="rc_lowpass">RC Low-Pass Filter (Transient)</option>
-            <option value="rlc_bandpass">RLC Band-Pass Filter (AC Bode)</option>
-            <option value="diode_iv">Diode I-V Curve (DC Sweep)</option>
-        </select>
-        <button id="btn-clear" class="btn btn-secondary">Clear Output</button>
-        <div id="status-indicator" class="status-loading">Loading WebAssembly...</div>
-    </div>
-
-    <main id="main-content">
-        <section id="editor-pane">
-            <div class="tab-bar">
-                <div class="tab active">Netlist</div>
-            </div>
-            <div class="editor-container">
-                <div id="line-numbers">1</div>
-                <textarea id="netlist-editor" spellcheck="false" wrap="off"></textarea>
-            </div>
-        </section>
-
-        <div id="resize-handle"></div>
-
-        <section id="output-pane">
-            <div class="tab-bar">
-                <div id="tab-console" class="tab active">Console</div>
-                <div id="tab-plot" class="tab">Plot</div>
-            </div>
-            <div class="output-container">
-                <pre id="console-output"></pre>
-                <div id="plot-container" style="display: none;">
-                    <div id="chart" style="width: 100%; height: 100%;"></div>
-                </div>
-            </div>
-        </section>
-    </main>
-
-    <footer id="footer">
-        <span>SPICE Suite &middot; Open source &middot; Made with <span class="heart">&#x2764;</span> in Egypt</span>
-        <span class="footer-tech">WebAssembly &middot; All computation runs locally in your browser</span>
-    </footer>
-
-    <script src="./spice_engine.js?v=3"></script>
-    <script src="app.js?v=3"></script>
+<body>    
+<header id="header">        
+<div class="logo-area">            
+<span class="brand-accent">&#x25B3;
+</span>            
+<h1>SPICE 
+<span class="brand-em">Simulator
+</span>
+</h1>        
+</div>        
+<nav class="header-nav">            
+<a href="../index.html" class="header-link">Home
+</a>            
+<button id="theme-toggle" class="theme-btn" aria-label="Toggle theme">                
+<span class="icon-light">&#x2600;
+</span>                
+<span class="icon-dark">&#x263E;
+</span>            
+</button>        
+</nav>    
+</header>    
+<div id="toolbar">        
+<button id="btn-run" class="btn btn-primary" disabled>            
+<span class="icon">&#x25B6;
+</span> Run Simulation        
+</button>        
+<select id="select-example">            
+<option value="" disabled selected>Load Example...
+</option>            
+<option value="rc_lowpass">RC Low-Pass Filter (Transient)
+</option>            
+<option value="rlc_bandpass">RLC Band-Pass Filter (AC Bode)
+</option>            
+<option value="diode_iv">Diode I-V Curve (DC Sweep)
+</option>        
+</select>        
+<button id="btn-clear" class="btn btn-secondary">Clear Output
+</button>        
+<div id="status-indicator" class="status-loading">Loading WebAssembly...
+</div>    
+</div>    
+<main id="main-content">        
+<section id="editor-pane">            
+<div class="tab-bar">                
+<div class="tab active">Netlist
+</div>            
+</div>            
+<div class="editor-container">                
+<div id="line-numbers">1
+</div>                
+<textarea id="netlist-editor" spellcheck="false" wrap="off">
+</textarea>            
+</div>        
+</section>        
+<div id="resize-handle">
+</div>        
+<section id="output-pane">            
+<div class="tab-bar">                
+<div id="tab-console" class="tab active">Console
+</div>                
+<div id="tab-plot" class="tab">Plot
+</div>            
+</div>            
+<div class="output-container">                
+<pre id="console-output">
+</pre>                
+<div id="plot-container" style="display: none;">                    
+<div id="chart" style="width: 100%; height: 100%;">
+</div>                
+</div>            
+</div>        
+</section>    
+</main>    
+<footer id="footer">        
+<span>SPICE Suite &middot; Open source &middot; Made with 
+<span class="heart">&#x2764;
+</span> in Egypt
+</span>        
+<span class="footer-tech">WebAssembly &middot; All computation runs locally in your browser
+</span>    
+</footer>    
+<script src="./spice_engine.js?v=3">
+</script>    
+<script src="app.js?v=5">
+</script>
 </body>
 </html>

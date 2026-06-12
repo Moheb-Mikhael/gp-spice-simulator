@@ -30,4 +30,22 @@
       navbar.classList.remove('scrolled');
     }
   }, { passive: true });
+
+  // Dropdown toggle (mobile + click)
+  document.addEventListener('click', function (e) {
+    var trigger = e.target.closest('.nav-dropdown-trigger');
+    if (trigger) {
+      e.preventDefault();
+      var dd = trigger.closest('.nav-dropdown');
+      var isOpen = dd.classList.contains('open');
+      document.querySelectorAll('.nav-dropdown.open').forEach(function (el) {
+        el.classList.remove('open');
+      });
+      if (!isOpen) dd.classList.add('open');
+    } else if (!e.target.closest('.nav-dropdown')) {
+      document.querySelectorAll('.nav-dropdown.open').forEach(function (el) {
+        el.classList.remove('open');
+      });
+    }
+  });
 })();

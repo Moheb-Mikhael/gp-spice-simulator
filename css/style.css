@@ -94,6 +94,15 @@ a:hover {
   gap: 8px;
 }
 
+.nav-brand {
+  text-decoration: none;
+  color: var(--text);
+}
+
+.nav-brand:hover {
+  color: var(--text);
+}
+
 .nav-brand .brand-accent {
   color: var(--gold);
 }
@@ -117,6 +126,81 @@ a:hover {
 .nav-links a:hover {
   color: var(--text);
   background: var(--gold-light);
+}
+
+.nav-links a.active {
+  color: var(--nile-blue);
+  background: var(--gold-light);
+  font-weight: 600;
+}
+
+/* --- Dropdowns --- */
+.nav-dropdown {
+  position: relative;
+}
+
+.nav-dropdown-trigger {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.nav-dropdown-trigger .arrow {
+  font-size: 0.65rem;
+  line-height: 1;
+  transition: transform 0.2s;
+}
+
+.nav-dropdown:hover .nav-dropdown-trigger .arrow,
+.nav-dropdown.open .nav-dropdown-trigger .arrow {
+  transform: rotate(180deg);
+}
+
+.nav-dropdown-menu {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 6px;
+  min-width: 160px;
+  box-shadow: 0 8px 24px rgba(45,43,40,0.12);
+  z-index: 200;
+  list-style: none;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .nav-dropdown:hover .nav-dropdown-menu {
+    display: block;
+  }
+}
+
+.nav-dropdown.open .nav-dropdown-menu {
+  display: block;
+}
+
+.nav-dropdown-menu a {
+  display: block;
+  padding: 8px 14px;
+  white-space: nowrap;
+  font-size: 0.85rem;
+  border-radius: 6px;
+}
+
+.nav-dropdown-menu a:hover {
+  background: var(--gold-light);
+  color: var(--text);
+}
+
+.nav-dropdown-menu a.active {
+  color: var(--nile-blue);
+  background: var(--gold-light);
+  font-weight: 600;
 }
 
 .nav-cta {
@@ -787,6 +871,71 @@ a:hover {
   color: rgba(255,255,255,0.35);
   border-top: 1px solid rgba(255,255,255,0.1);
   padding-top: 16px;
+}
+
+/* --- About the Project --- */
+#about-project {
+  background: var(--surface);
+}
+
+.project-logos {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 40px;
+  flex-wrap: wrap;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.project-logo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 24px 32px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--bg);
+  text-decoration: none;
+  transition: var(--transition);
+  min-width: 180px;
+}
+
+.project-logo:hover {
+  border-color: var(--gold);
+  box-shadow: var(--shadow-hover);
+  transform: translateY(-3px);
+}
+
+.project-logo img {
+  height: 80px;
+  max-width: 140px;
+  object-fit: contain;
+}
+
+.project-logo .logo-name {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.project-logo .logo-sub {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+}
+
+@media (max-width: 640px) {
+  .project-logos {
+    gap: 20px;
+  }
+  .project-logo {
+    min-width: 140px;
+    padding: 16px 20px;
+  }
+  .project-logo img {
+    height: 60px;
+  }
 }
 
 /* --- Responsive --- */

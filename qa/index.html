@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>  
+<meta charset="UTF-8">  
+<meta name="viewport" content="width=device-width, initial-scale=1.0">  
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">  
+<title>FAQ — SPICE Post-Processing Suite
+</title>  
+<meta name="description" content="Frequently asked questions about SPICE Suite — simulation, post-processing, export, and more.">  
+<link rel="preconnect" href="https://fonts.googleapis.com">  
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">  
+<link rel="stylesheet" href="../css/style.css?v=6">  
+<style>    .qa-page-main {      padding: calc(var(--nav-height) + 48px) 24px 60px;      max-width: 800px;      margin: 0 auto;    }    .faq-list {      display: flex;      flex-direction: column;      gap: 12px;    }    .faq-item {      border: 1px solid var(--border);      border-radius: var(--radius);      overflow: hidden;      background: var(--surface);      transition: var(--transition);    }    .faq-item:hover {      border-color: var(--gold);    }    .faq-question {      width: 100%;      background: none;      border: none;      padding: 20px 24px;      font-family: 'Inter', sans-serif;      font-size: 1rem;      font-weight: 500;      color: var(--text);      cursor: pointer;      display: flex;      align-items: center;      justify-content: space-between;      gap: 12px;      text-align: left;      transition: var(--transition);    }    .faq-question:hover {      color: var(--gold);    }    .faq-question .faq-icon {      font-size: 1.2rem;      color: var(--gold);      flex-shrink: 0;      transition: transform 0.25s ease;    }    .faq-item.open .faq-question .faq-icon {      transform: rotate(45deg);    }    .faq-answer {      max-height: 0;      overflow: hidden;      transition: max-height 0.3s ease, padding 0.3s ease;      padding: 0 24px;    }    .faq-item.open .faq-answer {      max-height: 300px;      padding: 0 24px 20px;    }    .faq-answer p {      color: var(--text-muted);      font-size: 0.92rem;      line-height: 1.7;    }    .faq-answer code {      font-family: 'JetBrains Mono', monospace;      font-size: 0.85rem;      background: var(--gold-light);      padding: 2px 6px;      border-radius: 4px;    }    .qa-footer-link {      text-align: center;      margin-top: 48px;      padding-top: 32px;      border-top: 1px solid var(--border);    }    .qa-footer-link p {      color: var(--text-muted);      font-size: 0.92rem;      margin-bottom: 16px;    }  
+</style>
+</head>
+<body>  
+<nav id="navbar">    
+<div class="nav-inner">      
+<a href="../index.html" class="nav-brand">        
+<span class="brand-accent">&#x25B3;
+</span>        SPICE 
+<span class="brand-accent">Suite
+</span>      
+</a>      
+<ul class="nav-links" id="navLinks">        
+<li>
+<a href="../vision/index.html">Vision
+</a>
+</li>        
+<li class="nav-dropdown">          
+<a href="#" class="nav-dropdown-trigger">SLT 
+<span class="arrow">&#x25BE;
+</span>
+</a>          
+<ul class="nav-dropdown-menu">            
+<li>
+<a href="../about/index.html">About
+</a>
+</li>            
+<li>
+<a href="../search/index.html">Commands
+</a>
+</li>            
+<li>
+<a href="../tutorials/index.html">Tutorials
+</a>
+</li>            
+<li>
+<a href="../download/index.html">Download
+</a>
+</li>          
+</ul>        
+</li>        
+<li class="nav-dropdown">          
+<a href="#" class="nav-dropdown-trigger">a Question? 
+<span class="arrow">&#x25BE;
+</span>
+</a>          
+<ul class="nav-dropdown-menu">            
+<li>
+<a href="../qa/index.html" class="active">Q&amp;A
+</a>
+</li>            
+<li>
+<a href="../community/index.html">Discussions
+</a>
+</li>          
+</ul>        
+</li>        
+<li>
+<a href="../contributions/index.html">Contributions
+</a>
+</li>        
+<li>
+<a href="../simulator/index.html" target="_blank" class="nav-cta">Launch Simulator &rarr;
+</a>
+</li>      
+</ul>      
+<button class="mobile-toggle" id="mobileToggle" aria-label="Menu">        
+<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">          
+<path d="M3 12h18M3 6h18M3 18h18"/>        
+</svg>      
+</button>    
+</div>  
+</nav>  
+<main class="qa-page-main">    
+<div class="section-header">      
+<h2>Frequently Asked Questions
+</h2>      
+<div class="section-divider">
+</div>      
+<p>Common questions about SPICE Suite — from running your first simulation to advanced post-processing.
+</p>    
+</div>    
+<div class="faq-list" id="faqList">      
+<div class="faq-item">        
+<button class="faq-question">          How do I run my first simulation?          
+<span class="faq-icon">+
+</span>        
+</button>        
+<div class="faq-answer">          
+<p>Open the 
+<a href="../simulator/index.html" target="_blank">Web Simulator
+</a>, and you&#x2019;ll see a default RC low-pass filter netlist already loaded. Click 
+<strong>Run Simulation
+</strong> to execute it. The console shows output logs, and if a 
+<code>plot
+</code> command is in the netlist, the Plot tab will display the waveform automatically.
+</p>        
+</div>      
+</div>      
+<div class="faq-item">        
+<button class="faq-question">          What netlist formats are supported?          
+<span class="faq-icon">+
+</span>        
+</button>        
+<div class="faq-answer">          
+<p>SPICE Suite uses standard SPICE netlist syntax. Any netlist that follows the traditional SPICE format (component lines, 
+<code>.control
+</code>/
+<code>.endc
+</code> blocks, analysis commands) should work. Examples are provided in the 
+<strong>Load Example
+</strong> dropdown inside the simulator.
+</p>        
+</div>      
+</div>      
+<div class="faq-item">        
+<button class="faq-question">          How do I export simulation data?          
+<span class="faq-icon">+
+</span>        
+</button>        
+<div class="faq-answer">          
+<p>You can use the 
+<code>export
+</code> command inside your 
+<code>.control
+</code> block to write data to a CSV file. For example: 
+<code>export data.csv V(in) V(out)
+</code>. The exported file is available for download in the browser version, or written to disk in the desktop app.
+</p>        
+</div>      
+</div>      
+<div class="faq-item">        
+<button class="faq-question">          What is the 
+<code>calc
+</code> command?          
+<span class="faq-icon">+
+</span>        
+</button>        
+<div class="faq-answer">          
+<p>The 
+<code>calc
+</code> command lets you evaluate arithmetic expressions on waveforms. You can add, subtract, multiply, and divide signals, apply functions like 
+<code>abs()
+</code>, 
+<code>sqrt()
+</code>, 
+<code>sin()
+</code>, 
+<code>log()
+</code>, and reduction functions such as 
+<code>max()
+</code>, 
+<code>min()
+</code>, 
+<code>avg()
+</code>, and 
+<code>rms()
+</code>.
+</p>        
+</div>      
+</div>      
+<div class="faq-item">        
+<button class="faq-question">          Where can I report bugs or suggest features?          
+<span class="faq-icon">+
+</span>        
+</button>        
+<div class="faq-answer">          
+<p>We&#x2019;re setting up a dedicated space on GitHub Discussions for community Q&amp;A, bug reports, and feature requests. In the meantime, you can reach out via email at 
+<a href="mailto:spice-suite@example.com">spice-suite@example.com
+</a> and we&#x2019;ll add your input to the archive.
+</p>        
+</div>      
+</div>      
+<div class="faq-item">        
+<button class="faq-question">          Is there a desktop version?          
+<span class="faq-icon">+
+</span>        
+</button>        
+<div class="faq-answer">          
+<p>Yes! SPICE Suite is available as a native application for both 
+<strong>Windows
+</strong> and 
+<strong>Linux
+</strong>. Check the 
+<a href="../download/index.html">Download page
+</a> for details. Desktop builds are currently in development and will be available soon.
+</p>        
+</div>      
+</div>    
+</div>    
+<div class="qa-footer-link">      
+<p>Have a question not listed here?
+</p>      
+<a href="../community/index.html" class="btn btn-primary">Join the Community Discussions &rarr;
+</a>    
+</div>  
+</main>  
+<footer id="footer">    
+<div class="footer-inner">      
+<div class="footer-links">        
+<a href="../index.html">Home
+</a>        
+<a href="../about/index.html">About
+</a>        
+<a href="../vision/index.html">Vision
+</a>        
+<a href="../search/index.html">Commands
+</a>        
+<a href="../tutorials/index.html">Tutorials
+</a>        
+<a href="../download/index.html">Download
+</a>        
+<a href="../qa/index.html">Q&amp;A
+</a>        
+<a href="../community/index.html">Discussions
+</a>        
+<a href="../contributions/index.html">Contributions
+</a>        
+<a href="../simulator/index.html" target="_blank">Launch Simulator
+</a>      
+</div>      
+<div class="footer-copy">        &copy; 2026 SPICE Suite Contributors. Available on Web (WASM) &middot; Windows &middot; Linux      
+</div>    
+</div>  
+</footer>  
+<script src="../js/main.js?v=5">
+</script>  
+<script>    (function () {      var items = document.querySelectorAll('.faq-item');      items.forEach(function (item) {        var btn = item.querySelector('.faq-question');        btn.addEventListener('click', function () {          var isOpen = item.classList.contains('open');          items.forEach(function (el) { el.classList.remove('open'); });          if (!isOpen) item.classList.add('open');        });      });    })();  
+</script>
+</body>
+</html>

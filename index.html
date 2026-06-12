@@ -1,263 +1,249 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-  <meta http-equiv="Pragma" content="no-cache">
-  <meta http-equiv="Expires" content="0">
-  <title>SPICE Post-Processing Suite — EDA for Egypt</title>
-  <meta name="description" content="An open-source SPICE circuit simulation and post-processing platform. Built for Egyptian students, by students — advancing Electronic Design Automation.">
-
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css?v=3">
+<head>  
+<meta charset="UTF-8">  
+<meta name="viewport" content="width=device-width, initial-scale=1.0">  
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">  
+<meta http-equiv="Pragma" content="no-cache">  
+<meta http-equiv="Expires" content="0">  
+<title>SPICE Post-Processing Suite — EDA for Egypt
+</title>  
+<meta name="description" content="An open-source SPICE circuit simulation and post-processing platform. Built for Egyptian students, by students — advancing Electronic Design Automation.">  
+<link rel="preconnect" href="https://fonts.googleapis.com">  
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">  
+<link rel="stylesheet" href="css/style.css?v=6">
 </head>
-<body>
+<body>  
+<!-- ======== NAVBAR ======== -->  
+<nav id="navbar">    
+<div class="nav-inner">      
+<a href="index.html" class="nav-brand">        
+<span class="brand-accent">&#x25B3;
+</span>        SPICE 
+<span class="brand-accent">Suite
+</span>      
+</a>      
+<ul class="nav-links" id="navLinks">        
+<li>
+<a href="vision/index.html">Vision
+</a>
+</li>        
+<li class="nav-dropdown">          
+<a href="#" class="nav-dropdown-trigger">SLT 
+<span class="arrow">&#x25BE;
+</span>
+</a>          
+<ul class="nav-dropdown-menu">            
+<li>
+<a href="about/index.html">About
+</a>
+</li>            
+<li>
+<a href="search/index.html">Commands
+</a>
+</li>            
+<li>
+<a href="tutorials/index.html">Tutorials
+</a>
+</li>            
+<li>
+<a href="download/index.html">Download
+</a>
+</li>          
+</ul>        
+</li>        
+<li class="nav-dropdown">          
+<a href="#" class="nav-dropdown-trigger">a Question? 
+<span class="arrow">&#x25BE;
+</span>
+</a>          
+<ul class="nav-dropdown-menu">            
+<li>
+<a href="qa/index.html">Q&amp;A
+</a>
+</li>            
+<li>
+<a href="community/index.html">Discussions
+</a>
+</li>          
+</ul>        
+</li>        
+<li>
+<a href="contributions/index.html">Contributions
+</a>
+</li>        
+<li>
+<a href="simulator/index.html" target="_blank" class="nav-cta">Launch Simulator &rarr;
+</a>
+</li>      
+</ul>      
+<button class="mobile-toggle" id="mobileToggle" aria-label="Menu">        
+<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">          
+<path d="M3 12h18M3 6h18M3 18h18"/>        
+</svg>      
+</button>    
+</div>  
+</nav>  
+<!-- ======== HERO ======== -->  
+<section id="hero">    
+<div class="hero-content">      
+<h1>        Shape the Future of
+<br>        Electronic Design &mdash; 
+<span class="highlight">from Egypt
+</span>      
+</h1>      
+<p class="hero-subtitle">        An open-source SPICE post-processing platform.
+<br>        Available on Web, Windows, and Linux.
+<br>        Built for students, by students &mdash; to put Egyptian engineering on the EDA map.      
+</p>      
+<div class="hero-actions">        
+<a href="#slt" class="btn btn-primary">Explore SLT &rarr;
+</a>        
+<a href="vision/index.html" class="btn btn-secondary">Our Vision
+</a>      
+</div>    
+</div>  
+</section>  
+<!-- ======== ABOUT THE PROJECT ======== -->  
+<section id="about-project" class="section">    
+<div class="section-header">      
+<h2>About the Project
+</h2>      
+<div class="section-divider">
+</div>      
+<p>A graduation project by a team of students from the <strong>Electronics and Electrical Communications Engineering</strong> department at <strong>Cairo University</strong>, proudly sponsored by <strong>Si-Vision</strong>.
+</p>    
+</div>    
+<div class="project-logos">      
+<a href="https://cu.edu.eg/Home" target="_blank" class="project-logo">        
+<img src="images/Cairo_University_new_logo.png" alt="Cairo University">        
+<span class="logo-name">Cairo University
+</span>        
+<span class="logo-sub">University
+</span>      
+</a>      
+<a href="https://eng.cu.edu.eg/en/" target="_blank" class="project-logo">        
+<img src="images/CUFE.jfif" alt="Faculty of Engineering, Cairo University">        
+<span class="logo-name">Faculty of Engineering
+</span>        
+<span class="logo-sub">CUFE
+</span>      
+</a>      
+<a href="https://si-vision.com/" target="_blank" class="project-logo">        
+<img src="images/si-vision.png" alt="Si-Vision">        
+<span class="logo-name">Si-Vision
+</span>        
+<span class="logo-sub">Sponsor
+</span>      
+</a>    
+</div>  
+</section>  
+<!-- ======== SLT SECTION ======== -->  
+<section id="slt" class="section">    
+<div class="section-header">      
+<h2>SLT
+</h2>      
+<div class="section-divider">
+</div>      
+<p>Open it in a new tab and start simulating. No account, no setup.
+</p>    
+</div>    
+<div class="tool-showcase">      
+<div class="tool-mockup">        
+<div class="mockup-header">          
+<span class="mockup-dot">
+</span>          
+<span class="mockup-dot">
+</span>          
+<span class="mockup-dot">
+</span>          
+<span class="mockup-title">SLT Web Simulator
+</span>        
+</div>        
+<div class="mockup-body">          
+<div class="mockup-sidebar">            
+<div class="mockup-line" style="width:80%">
+</div>            
+<div class="mockup-line" style="width:60%">
+</div>            
+<div class="mockup-line" style="width:70%">
+</div>            
+<div class="mockup-line" style="width:50%">
+</div>            
+<div class="mockup-line" style="width:65%">
+</div>          
+</div>          
+<div class="mockup-main">            
+<div class="mockup-code">              
+<span style="color:#f7768e">*
+</span> 
+<span style="color:#89ddff">RC Low-Pass Filter
+</span>
+<br>              V1 in 0 DC 5 AC 1
+<br>              R1 in out 
+<span style="color:#ff9e64">1k
+</span>
+<br>              C1 out 0 
+<span style="color:#ff9e64">1u
+</span>
+<br>              
+<span style="color:#bb9af7">.control
+</span>
+<br>              &nbsp;&nbsp;tran 0.1m 5m
+<br>              &nbsp;&nbsp;plot time V(in) V(out)
+<br>              
+<span style="color:#bb9af7">.endc
+</span>
+<br>              
+<span style="color:#bb9af7">.end
+</span>            
+</div>          
+</div>        
+</div>      
+</div>      
+<div class="tool-launch-row">        
+<a href="simulator/index.html" target="_blank" class="btn btn-primary btn-lg">Launch in Browser &rarr;
+</a>        
+<a href="download/index.html" target="_blank" class="btn btn-secondary btn-lg">Download Desktop
+</a>      
+</div>    
+</div>  
+</section>  
 
-  <!-- ======== NAVBAR ======== -->
-  <nav id="navbar">
-    <div class="nav-inner">
-      <div class="nav-brand">
-        <span class="brand-accent">&#x25B3;</span>
-        SPICE <span class="brand-accent">Suite</span>
-      </div>
-      <ul class="nav-links" id="navLinks">
-        <li><a href="#about">About</a></li>
-        <li><a href="#vision">Vision</a></li>
-        <li><a href="#tool">Tool</a></li>
-        <li><a href="search/index.html" target="_blank">Search</a></li>
-        <li><a href="tutorials/index.html" target="_blank">Tutorials</a></li>
-        <li><a href="download/index.html" target="_blank">Download</a></li>
-        <li><a href="#qa">Q&amp;A</a></li>
-        <li><a href="simulator/index.html" target="_blank" class="nav-cta">Launch Simulator &rarr;</a></li>
-      </ul>
-      <button class="mobile-toggle" id="mobileToggle" aria-label="Menu">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M3 12h18M3 6h18M3 18h18"/>
-        </svg>
-      </button>
-    </div>
-  </nav>
-
-  <!-- ======== HERO ======== -->
-  <section id="hero">
-    <div class="hero-content">
-      <h1>
-        Shape the Future of<br>
-        Electronic Design &mdash; <span class="highlight">from Egypt</span>
-      </h1>
-      <p class="hero-subtitle">
-        An open-source SPICE post-processing platform.<br>
-        Available on Web, Windows, and Linux.<br>
-        Built for students, by students &mdash; to put Egyptian engineering on the EDA map.
-      </p>
-      <div class="hero-actions">
-        <a href="simulator/index.html" target="_blank" class="btn btn-primary">Launch the Simulator &rarr;</a>
-        <a href="#vision" class="btn btn-secondary">Our Vision</a>
-      </div>
-    </div>
-  </section>
-
-  <!-- ======== ABOUT ======== -->
-  <section id="about" class="section">
-    <div class="section-header">
-      <h2>About the Tool</h2>
-      <div class="section-divider"></div>
-      <p>A complete SPICE post-processing suite for Web, Windows, and Linux.</p>
-    </div>
-    <div class="about-grid">
-      <div class="about-card">
-        <div class="icon">&#x1F4CA;</div>
-        <h3>Waveform Database</h3>
-        <p>Load, inspect, and manage simulation data with a built-in WaveformDB. List signals, view metadata, and switch between multiple datasets seamlessly.</p>
-      </div>
-      <div class="about-card">
-        <div class="icon">&#x2699;</div>
-        <h3>Measurement Engine</h3>
-        <p>Measure rise time, fall time, period, frequency, delay, peak-to-peak, RMS, average, and more. Window your analysis with <code>from</code> &hellip; <code>to</code>.</p>
-      </div>
-      <div class="about-card">
-        <div class="icon">&#x2B50;</div>
-        <h3>Built-In Calculator</h3>
-        <p>Evaluate arithmetic expressions on waveforms. Supports <code>+</code>, <code>-</code>, <code>*</code>, <code>/</code>, trigonometric functions, logarithms, and reduction functions.</p>
-      </div>
-      <div class="about-card">
-        <div class="icon">&#x1F4DD;</div>
-        <h3>Export &amp; Plot</h3>
-        <p>Export data to CSV, generate publication-ready plots with custom titles, and save as PNG. All computation runs locally via WebAssembly.</p>
-      </div>
-      <div class="about-card">
-        <div class="icon">&#x1F5A5;</div>
-        <h3>Cross-Platform</h3>
-        <p>Use the desktop app on Windows or Linux for native performance, or access the full post-processing suite directly in your browser via WebAssembly. Same engine, every platform.</p>
-      </div>
-      <div class="about-card">
-        <div class="icon">&#x1F3EB;</div>
-        <h3>Open Source</h3>
-        <p>Study every layer &mdash; from the netlist parser to the plotting engine. Contribute, modify, and build your own EDA tools on top of it.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- ======== VISION ======== -->
-  <section id="vision" class="section">
-    <div class="section-header">
-      <h2>Our Vision</h2>
-      <div class="section-divider"></div>
-      <p>Why we built this, and where we&rsquo;re going.</p>
-    </div>
-    <div class="vision-content">
-      <blockquote>
-        &ldquo;Electronic Design Automation is the backbone of modern technology &mdash; yet the tools that shape it are rarely built by the engineers who will use them tomorrow. We believe Egyptian students can and should be part of that conversation.&rdquo;
-      </blockquote>
-      <p>
-        This platform is our first step. A fully open-source SPICE simulation and post-processing environment that
-        runs on Web, Windows, and Linux, requires nothing to install, and invites you to look under the hood.
-      </p>
-      <p>
-        We want every Egyptian engineering student to see that EDA is not a black box. You can understand it.
-        You can improve it. You can build the next generation of tools that the world&rsquo;s engineers will rely on.
-      </p>
-      <p>
-        Contribute on GitHub. Share it with your classmates. Fork it, break it, fix it, make it yours.
-        <br><strong>This is just the beginning.</strong>
-      </p>
-      <div style="margin-top: 28px;">
-        <a href="simulator/index.html" target="_blank" class="btn btn-primary">Try the Simulator &rarr;</a>
-      </div>
-    </div>
-  </section>
-
-  <!-- ======== TOOL SECTION ======== -->
-  <section id="tool" class="section">
-    <div class="section-header">
-      <h2>Try the Simulator</h2>
-      <div class="section-divider"></div>
-      <p>Open it in a new tab and start simulating. No account, no setup.</p>
-    </div>
-    <div class="tool-showcase">
-      <div class="tool-mockup">
-        <div class="mockup-header">
-          <span class="mockup-dot"></span>
-          <span class="mockup-dot"></span>
-          <span class="mockup-dot"></span>
-          <span class="mockup-title">SPICE Web Simulator</span>
-        </div>
-        <div class="mockup-body">
-          <div class="mockup-sidebar">
-            <div class="mockup-line" style="width:80%"></div>
-            <div class="mockup-line" style="width:60%"></div>
-            <div class="mockup-line" style="width:70%"></div>
-            <div class="mockup-line" style="width:50%"></div>
-            <div class="mockup-line" style="width:65%"></div>
-          </div>
-          <div class="mockup-main">
-            <div class="mockup-code">
-              <span style="color:#f7768e">*</span> <span style="color:#89ddff">RC Low-Pass Filter</span><br>
-              V1 in 0 DC 5 AC 1<br>
-              R1 in out <span style="color:#ff9e64">1k</span><br>
-              C1 out 0 <span style="color:#ff9e64">1u</span><br>
-              <span style="color:#bb9af7">.control</span><br>
-              &nbsp;&nbsp;tran 0.1m 5m<br>
-              &nbsp;&nbsp;plot time V(in) V(out)<br>
-              <span style="color:#bb9af7">.endc</span><br>
-              <span style="color:#bb9af7">.end</span>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="tool-launch-row">
-        <a href="simulator/index.html" target="_blank" class="btn btn-primary btn-lg">Launch in Browser &rarr;</a>
-        <a href="download/index.html" target="_blank" class="btn btn-secondary btn-lg">Download Desktop</a>
-      </div>
-    </div>
-
-    <div class="tool-quickstart">
-      <h4>Quick-start netlist &mdash; copy and run</h4>
-      <pre><code>* RC Low-Pass Filter
-V1 in 0 DC 5 AC 1
-R1 in out 1k
-C1 out 0 1u
-.control
-  tran 0.1m 5m
-  plot time V(in) V(out)
-.endc
-.end</code></pre>
-    </div>
-  </section>
-
-  <!-- ======== SEARCH ======== -->
-  <section id="search" class="section">
-    <div class="section-header">
-      <h2>Search Documentation</h2>
-      <div class="section-divider"></div>
-      <p>Full command reference with syntax, examples, and detailed descriptions for all 47 SPICE commands.</p>
-    </div>
-    <div style="text-align:center;">
-      <a href="search/index.html" target="_blank" class="btn btn-primary">Explore Full Documentation &rarr;</a>
-    </div>
-  </section>
-
-  <!-- ======== TUTORIALS ======== -->
-  <section id="tutorials" class="section">
-    <div class="section-header">
-      <h2>Tutorials</h2>
-      <div class="section-divider"></div>
-      <p>Learn circuit simulation and post-processing with MIT OCW videos and written guides.</p>
-    </div>
-    <div style="text-align:center;">
-      <a href="tutorials/index.html" target="_blank" class="btn btn-primary">Browse All Tutorials &rarr;</a>
-    </div>
-  </section>
-
-  <!-- ======== Q&A ======== -->
-  <section id="qa" class="section">
-    <div class="section-header">
-      <h2>Community Q&amp;A</h2>
-      <div class="section-divider"></div>
-      <p>Ask questions, share knowledge, and grow together.</p>
-    </div>
-    <div class="qa-container">
-      <p>
-        Have a question about a SPICE command? Stuck on a measurement? Want to suggest a feature?
-        Our community Q&amp;A is the safest place to ask. Every question helps someone else learn.
-      </p>
-      <div class="qa-embed">
-        <div class="placeholder-icon">&#x1F4AC;</div>
-        <h4>GitHub Discussions — Coming Soon</h4>
-        <p>
-          We&rsquo;re setting up a dedicated Q&amp;A space on GitHub Discussions.
-          In the meantime, reach out to us directly and we&rsquo;ll add your question to the archive.
-        </p>
-        <a href="mailto:spice-suite@example.com" class="btn btn-secondary">Get in Touch &rarr;</a>
-      </div>
-    </div>
-  </section>
-
-  <!-- ======== FOOTER ======== -->
-  <footer id="footer">
-    <div class="footer-inner">
-      <div class="footer-links">
-        <a href="#about">About</a>
-        <a href="#vision">Vision</a>
-        <a href="#tool">Tool</a>
-        <a href="search/index.html" target="_blank">Search</a>
-        <a href="tutorials/index.html" target="_blank">Tutorials</a>
-        <a href="download/index.html" target="_blank">Download</a>
-        <a href="#qa">Q&amp;A</a>
-        <a href="simulator/index.html" target="_blank">Launch Simulator</a>
-      </div>
-      <div class="footer-brand">SPICE Post-Processing Suite</div>
-      <div class="footer-tagline">
-        Open source &middot; Community-driven &middot; Made with <span class="heart">love</span> in Egypt
-      </div>
-      <div class="footer-copy">
-        &copy; 2026 SPICE Suite Contributors. Available on Web (WASM) &middot; Windows &middot; Linux
-      </div>
-    </div>
-  </footer>
-
-  <script src="js/main.js?v=3"></script>
+<!-- ======== FOOTER ======== -->  
+<footer id="footer">    
+<div class="footer-inner">      
+<div class="footer-links">        
+<a href="about/index.html" target="_blank">About
+</a>        
+<a href="vision/index.html" target="_blank">Vision
+</a>        
+<a href="search/index.html" target="_blank">Commands
+</a>        
+<a href="tutorials/index.html" target="_blank">Tutorials
+</a>        
+<a href="download/index.html" target="_blank">Download
+</a>        
+<a href="qa/index.html" target="_blank">Q&amp;A
+</a>        
+<a href="community/index.html" target="_blank">Discussions
+</a>        
+<a href="contributions/index.html" target="_blank">Contributions
+</a>        
+<a href="simulator/index.html" target="_blank">Launch Simulator
+</a>      
+</div>      
+<div class="footer-brand">SPICE Post-Processing Suite
+</div>      
+<div class="footer-tagline">        Open source &middot; Community-driven &middot; Made with 
+<span class="heart">love
+</span> in Egypt      
+</div>      
+<div class="footer-copy">        &copy; 2026 SPICE Suite Contributors. Available on Web (WASM) &middot; Windows &middot; Linux      
+</div>    
+</div>  
+</footer>  
+<script src="js/main.js?v=5">
+</script>
 </body>
 </html>

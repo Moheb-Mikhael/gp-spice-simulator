@@ -1,180 +1,258 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-  <title>Tutorials — SPICE Post-Processing Suite</title>
-  <meta name="description" content="Learn SPICE circuit simulation and post-processing with tutorials.">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../css/style.css?v=3">
+<head>  
+<meta charset="UTF-8">  
+<meta name="viewport" content="width=device-width, initial-scale=1.0">  
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">  
+<title>Tutorials — SPICE Post-Processing Suite
+</title>  
+<meta name="description" content="Learn SPICE circuit simulation and post-processing with tutorials.">  
+<link rel="preconnect" href="https://fonts.googleapis.com">  
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">  
+<link rel="stylesheet" href="../css/style.css?v=6">
 </head>
-<body>
-
-  <nav id="navbar">
-    <div class="nav-inner">
-      <div class="nav-brand">
-        <span class="brand-accent">&#x25B3;</span>
-        SPICE <span class="brand-accent">Suite</span>
-      </div>
-      <ul class="nav-links" id="navLinks">
-        <li><a href="../index.html">Home</a></li>
-        <li><a href="../index.html#about">About</a></li>
-        <li><a href="../index.html#vision">Vision</a></li>
-        <li><a href="../search/index.html">Search</a></li>
-        <li><a href="../download/index.html">Download</a></li>
-        <li><a href="../simulator/index.html" target="_blank" class="nav-cta">Launch Simulator &rarr;</a></li>
-      </ul>
-    </div>
-  </nav>
-
-  <div style="padding: calc(var(--nav-height) + 48px) 24px 60px;">
-    <div class="section-header">
-      <h2>Tutorials</h2>
-      <div class="section-divider"></div>
-      <p>Learn circuit simulation and post-processing step by step.</p>
-    </div>
-
-    <div class="tutorial-filters" id="tutorialFilters">
-      <button class="active" data-filter="all">All</button>
-      <button data-filter="circuit">Circuit Analysis</button>
-      <button data-filter="postproc">Post-Processing</button>
-      <button data-filter="calculator">Calculator</button>
-    </div>
-
-    <div class="tutorial-grid" id="tutorialGrid">
-      <div class="tutorial-card" data-tags="circuit">
-        <div class="card-media">
-          <div class="placeholder-vid">
-            <div>
-              <div style="font-size:1.5rem;margin-bottom:6px;">&#x25B6;</div>
-              <div>MIT OCW — Circuit Analysis</div>
-            </div>
-          </div>
-        </div>
-        <div class="card-body">
-          <span class="card-tag">Circuit Analysis</span>
-          <h4>Introduction to Circuit Simulation</h4>
-          <p>Fundamentals of SPICE netlists, component models, and running your first transient analysis.</p>
-        </div>
-      </div>
-
-      <div class="tutorial-card" data-tags="circuit">
-        <div class="card-media">
-          <div class="placeholder-vid">
-            <div>
-              <div style="font-size:1.5rem;margin-bottom:6px;">&#x25B6;</div>
-              <div>MIT OCW — MOSFETs</div>
-            </div>
-          </div>
-        </div>
-        <div class="card-body">
-          <span class="card-tag">Circuit Analysis</span>
-          <h4>MOSFET I-V Characteristics &amp; DC Sweep</h4>
-          <p>Use DC sweep analysis to plot MOSFET drain current vs. gate voltage. Understand weak to strong inversion.</p>
-        </div>
-      </div>
-
-      <div class="tutorial-card" data-tags="postproc">
-        <div class="card-media">
-          <div class="placeholder-vid">
-            <div>
-              <div style="font-size:1.5rem;margin-bottom:6px;">&#x25B6;</div>
-              <div>MIT OCW — Op-Amps</div>
-            </div>
-          </div>
-        </div>
-        <div class="card-body">
-          <span class="card-tag">Post-Processing</span>
-          <h4>Plotting &amp; Measuring Amplifier Response</h4>
-          <p>Run a transient analysis on an op-amp circuit, plot input/output, and measure rise time and delay.</p>
-        </div>
-      </div>
-
-      <div class="tutorial-card" data-tags="postproc">
-        <div class="card-media">
-          <div class="placeholder-vid">
-            <div>
-              <div style="font-size:1.5rem;margin-bottom:6px;">&#x25B6;</div>
-              <div>MIT OCW — Bode Plots</div>
-            </div>
-          </div>
-        </div>
-        <div class="card-body">
-          <span class="card-tag">Post-Processing</span>
-          <h4>AC Analysis &amp; Bode Plot Generation</h4>
-          <p>Set up an AC sweep, use <code>db()</code> to convert magnitude, and export publication-ready plots.</p>
-        </div>
-      </div>
-
-      <div class="tutorial-card" data-tags="calculator">
-        <div class="card-media">
-          <div class="placeholder-vid">
-            <div>
-              <div style="font-size:1.5rem;margin-bottom:6px;">&#x25B6;</div>
-              <div>MIT OCW — Signals</div>
-            </div>
-          </div>
-        </div>
-        <div class="card-body">
-          <span class="card-tag">Calculator</span>
-          <h4>Waveform Math with the calc Engine</h4>
-          <p>Add, subtract, multiply signals. Use <code>abs()</code>, <code>sqrt()</code>, and reduction functions to extract scalar values.</p>
-        </div>
-      </div>
-
-      <div class="tutorial-card" data-tags="calculator">
-        <div class="card-media">
-          <div class="placeholder-vid">
-            <div>
-              <div style="font-size:1.5rem;margin-bottom:6px;">&#x270D;</div>
-              <div>Written Guide</div>
-            </div>
-          </div>
-        </div>
-        <div class="card-body">
-          <span class="card-tag">Calculator</span>
-          <h4>Coming Soon: calc Reference Guide</h4>
-          <p>A deep dive into every calc operator, element-wise function, and reduction with real circuit examples.</p>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <footer id="footer">
-    <div class="footer-inner">
-      <div class="footer-links">
-        <a href="../index.html">Home</a>
-        <a href="../search/index.html">Search</a>
-        <a href="../download/index.html">Download</a>
-        <a href="../simulator/index.html" target="_blank">Launch Simulator</a>
-      </div>
-      <div class="footer-copy">
-        &copy; 2026 SPICE Suite Contributors. Available on Web (WASM) &middot; Windows &middot; Linux
-      </div>
-    </div>
-  </footer>
-
-  <script>
-    (function () {
-      var filterButtons = document.querySelectorAll('#tutorialFilters button');
-      var tutorialCards = document.querySelectorAll('#tutorialGrid .tutorial-card');
-      filterButtons.forEach(function (btn) {
-        btn.addEventListener('click', function () {
-          filterButtons.forEach(function (b) { b.classList.remove('active'); });
-          btn.classList.add('active');
-          var filter = btn.getAttribute('data-filter');
-          tutorialCards.forEach(function (card) {
-            if (filter === 'all' || card.getAttribute('data-tags').indexOf(filter) !== -1) {
-              card.style.display = '';
-            } else {
-              card.style.display = 'none';
-            }
-          });
-        });
-      });
-    })();
-  </script>
+<body>  
+<nav id="navbar">    
+<div class="nav-inner">      
+<a href="../index.html" class="nav-brand">        
+<span class="brand-accent">&#x25B3;
+</span>        SPICE 
+<span class="brand-accent">Suite
+</span>      
+</a>      
+<ul class="nav-links" id="navLinks">        
+<li>
+<a href="../vision/index.html">Vision
+</a>
+</li>        
+<li class="nav-dropdown">          
+<a href="#" class="nav-dropdown-trigger">SLT 
+<span class="arrow">&#x25BE;
+</span>
+</a>          
+<ul class="nav-dropdown-menu">            
+<li>
+<a href="../about/index.html">About
+</a>
+</li>            
+<li>
+<a href="../search/index.html">Commands
+</a>
+</li>            
+<li>
+<a href="../tutorials/index.html" class="active">Tutorials
+</a>
+</li>            
+<li>
+<a href="../download/index.html">Download
+</a>
+</li>          
+</ul>        
+</li>        
+<li class="nav-dropdown">          
+<a href="#" class="nav-dropdown-trigger">a Question? 
+<span class="arrow">&#x25BE;
+</span>
+</a>          
+<ul class="nav-dropdown-menu">            
+<li>
+<a href="../qa/index.html">Q&amp;A
+</a>
+</li>            
+<li>
+<a href="../community/index.html">Discussions
+</a>
+</li>          
+</ul>        
+</li>        
+<li>
+<a href="../contributions/index.html">Contributions
+</a>
+</li>        
+<li>
+<a href="../simulator/index.html" target="_blank" class="nav-cta">Launch Simulator &rarr;
+</a>
+</li>      
+</ul>    
+</div>  
+</nav>  
+<div style="padding: calc(var(--nav-height) + 48px) 24px 60px;">    
+<div class="section-header">      
+<h2>Tutorials
+</h2>      
+<div class="section-divider">
+</div>      
+<p>Learn circuit simulation and post-processing step by step.
+</p>    
+</div>    
+<div class="tutorial-filters" id="tutorialFilters">      
+<button class="active" data-filter="all">All
+</button>      
+<button data-filter="circuit">Circuit Analysis
+</button>      
+<button data-filter="postproc">Post-Processing
+</button>      
+<button data-filter="calculator">Calculator
+</button>    
+</div>    
+<div class="tutorial-grid" id="tutorialGrid">      
+<div class="tutorial-card" data-tags="circuit">        
+<div class="card-media">          
+<div class="placeholder-vid">            
+<div>              
+<div style="font-size:1.5rem;margin-bottom:6px;">&#x25B6;
+</div>              
+<div>MIT OCW — Circuit Analysis
+</div>            
+</div>          
+</div>        
+</div>        
+<div class="card-body">          
+<span class="card-tag">Circuit Analysis
+</span>          
+<h4>Introduction to Circuit Simulation
+</h4>          
+<p>Fundamentals of SPICE netlists, component models, and running your first transient analysis.
+</p>        
+</div>      
+</div>      
+<div class="tutorial-card" data-tags="circuit">        
+<div class="card-media">          
+<div class="placeholder-vid">            
+<div>              
+<div style="font-size:1.5rem;margin-bottom:6px;">&#x25B6;
+</div>              
+<div>MIT OCW — MOSFETs
+</div>            
+</div>          
+</div>        
+</div>        
+<div class="card-body">          
+<span class="card-tag">Circuit Analysis
+</span>          
+<h4>MOSFET I-V Characteristics &amp; DC Sweep
+</h4>          
+<p>Use DC sweep analysis to plot MOSFET drain current vs. gate voltage. Understand weak to strong inversion.
+</p>        
+</div>      
+</div>      
+<div class="tutorial-card" data-tags="postproc">        
+<div class="card-media">          
+<div class="placeholder-vid">            
+<div>              
+<div style="font-size:1.5rem;margin-bottom:6px;">&#x25B6;
+</div>              
+<div>MIT OCW — Op-Amps
+</div>            
+</div>          
+</div>        
+</div>        
+<div class="card-body">          
+<span class="card-tag">Post-Processing
+</span>          
+<h4>Plotting &amp; Measuring Amplifier Response
+</h4>          
+<p>Run a transient analysis on an op-amp circuit, plot input/output, and measure rise time and delay.
+</p>        
+</div>      
+</div>      
+<div class="tutorial-card" data-tags="postproc">        
+<div class="card-media">          
+<div class="placeholder-vid">            
+<div>              
+<div style="font-size:1.5rem;margin-bottom:6px;">&#x25B6;
+</div>              
+<div>MIT OCW — Bode Plots
+</div>            
+</div>          
+</div>        
+</div>        
+<div class="card-body">          
+<span class="card-tag">Post-Processing
+</span>          
+<h4>AC Analysis &amp; Bode Plot Generation
+</h4>          
+<p>Set up an AC sweep, use 
+<code>db()
+</code> to convert magnitude, and export publication-ready plots.
+</p>        
+</div>      
+</div>      
+<div class="tutorial-card" data-tags="calculator">        
+<div class="card-media">          
+<div class="placeholder-vid">            
+<div>              
+<div style="font-size:1.5rem;margin-bottom:6px;">&#x25B6;
+</div>              
+<div>MIT OCW — Signals
+</div>            
+</div>          
+</div>        
+</div>        
+<div class="card-body">          
+<span class="card-tag">Calculator
+</span>          
+<h4>Waveform Math with the calc Engine
+</h4>          
+<p>Add, subtract, multiply signals. Use 
+<code>abs()
+</code>, 
+<code>sqrt()
+</code>, and reduction functions to extract scalar values.
+</p>        
+</div>      
+</div>      
+<div class="tutorial-card" data-tags="calculator">        
+<div class="card-media">          
+<div class="placeholder-vid">            
+<div>              
+<div style="font-size:1.5rem;margin-bottom:6px;">&#x270D;
+</div>              
+<div>Written Guide
+</div>            
+</div>          
+</div>        
+</div>        
+<div class="card-body">          
+<span class="card-tag">Calculator
+</span>          
+<h4>Coming Soon: calc Reference Guide
+</h4>          
+<p>A deep dive into every calc operator, element-wise function, and reduction with real circuit examples.
+</p>        
+</div>      
+</div>    
+</div>  
+</div>  
+<footer id="footer">    
+<div class="footer-inner">      
+<div class="footer-links">        
+<a href="../index.html">Home
+</a>        
+<a href="../about/index.html">About
+</a>        
+<a href="../vision/index.html">Vision
+</a>        
+<a href="../search/index.html">Commands
+</a>        
+<a href="../tutorials/index.html">Tutorials
+</a>        
+<a href="../download/index.html">Download
+</a>        
+<a href="../qa/index.html">Q&amp;A
+</a>        
+<a href="../community/index.html">Discussions
+</a>        
+<a href="../contributions/index.html">Contributions
+</a>        
+<a href="../simulator/index.html" target="_blank">Launch Simulator
+</a>      
+</div>      
+<div class="footer-copy">        &copy; 2026 SPICE Suite Contributors. Available on Web (WASM) &middot; Windows &middot; Linux      
+</div>    
+</div>  
+</footer>  
+<script>    (function () {      var filterButtons = document.querySelectorAll('#tutorialFilters button');      var tutorialCards = document.querySelectorAll('#tutorialGrid .tutorial-card');      filterButtons.forEach(function (btn) {        btn.addEventListener('click', function () {          filterButtons.forEach(function (b) { b.classList.remove('active'); });          btn.classList.add('active');          var filter = btn.getAttribute('data-filter');          tutorialCards.forEach(function (card) {            if (filter === 'all' || card.getAttribute('data-tags').indexOf(filter) !== -1) {              card.style.display = '';            } else {              card.style.display = 'none';            }          });        });      });    })();  
+</script>
 </body>
 </html>
