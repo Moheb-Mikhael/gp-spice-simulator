@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <title>Download — SPICE Post-Processing Suite</title>
+  <meta name="description" content="Download SPICE Suite for Windows and Linux.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css?v=3">
+  <style>
+    .download-main {
+      padding: calc(var(--nav-height) + 48px) 24px 60px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .download-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 32px;
+      margin-top: 40px;
+    }
+
+    .download-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 40px 32px;
+      text-align: center;
+      transition: var(--transition);
+    }
+
+    .download-card:hover {
+      box-shadow: var(--shadow-hover);
+      border-color: var(--gold);
+      transform: translateY(-4px);
+    }
+
+    .download-card .dl-icon {
+      font-size: 3rem;
+      margin-bottom: 16px;
+    }
+
+    .download-card h3 {
+      font-family: 'Inter', sans-serif;
+      font-size: 1.3rem;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .download-card .dl-desc {
+      color: var(--text-muted);
+      font-size: 0.92rem;
+      line-height: 1.7;
+      margin-bottom: 8px;
+    }
+
+    .download-card .dl-features {
+      text-align: left;
+      list-style: none;
+      padding: 0;
+      margin: 16px 0 24px;
+    }
+
+    .download-card .dl-features li {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      padding: 4px 0;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .download-card .dl-features li::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      background: var(--gold);
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .download-card .btn {
+      font-size: 0.9rem;
+      padding: 12px 28px;
+    }
+
+    .download-note {
+      text-align: center;
+      margin-top: 48px;
+      padding-top: 32px;
+      border-top: 1px solid var(--border);
+    }
+
+    .download-note p {
+      color: var(--text-muted);
+      font-size: 0.92rem;
+    }
+
+    .download-note a {
+      font-weight: 600;
+    }
+
+    @media (max-width: 640px) {
+      .download-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <nav id="navbar">
+    <div class="nav-inner">
+      <div class="nav-brand">
+        <span class="brand-accent">&#x25B3;</span>
+        SPICE <span class="brand-accent">Suite</span>
+      </div>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="../index.html">Home</a></li>
+        <li><a href="../index.html#about">About</a></li>
+        <li><a href="../index.html#vision">Vision</a></li>
+        <li><a href="../search/index.html">Search</a></li>
+        <li><a href="../tutorials/index.html">Tutorials</a></li>
+        <li><a href="../simulator/index.html" target="_blank" class="nav-cta">Launch Simulator &rarr;</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main class="download-main">
+    <div class="section-header">
+      <h2>Download SPICE Suite</h2>
+      <div class="section-divider"></div>
+      <p>Run the simulation engine and post-processor natively on your platform.</p>
+    </div>
+
+    <div class="download-grid">
+      <div class="download-card">
+        <div class="dl-icon">&#x1F5A5;</div>
+        <h3>Windows</h3>
+        <p class="dl-desc">Native Windows application. Full simulation engine and post-processor.</p>
+        <ul class="dl-features">
+          <li>Standalone executable — no dependencies</li>
+          <li>Command-line interface for batch processing</li>
+          <li>Full SPICE netlist parsing and simulation</li>
+          <li>Post-processing suite with meas/calc/plot</li>
+        </ul>
+        <span class="btn btn-secondary" style="opacity:0.6;cursor:default;">Download — Coming Soon</span>
+      </div>
+
+      <div class="download-card">
+        <div class="dl-icon">&#x1F427;</div>
+        <h3>Linux</h3>
+        <p class="dl-desc">Native Linux build. Runs on any modern distribution.</p>
+        <ul class="dl-features">
+          <li>Standalone binary — no package manager needed</li>
+          <li>Full terminal integration for scripting</li>
+          <li>Same engine as web version, native performance</li>
+          <li>Open source — inspect and modify every layer</li>
+        </ul>
+        <span class="btn btn-secondary" style="opacity:0.6;cursor:default;">Download — Coming Soon</span>
+      </div>
+    </div>
+
+    <div class="download-note">
+      <p>Prefer the browser? <a href="../simulator/index.html" target="_blank">Launch the Web Simulator &rarr;</a></p>
+      <p style="margin-top:8px;font-size:0.85rem;">No installation, no account — just open and simulate.</p>
+    </div>
+  </main>
+
+  <footer id="footer">
+    <div class="footer-inner">
+      <div class="footer-links">
+        <a href="../index.html">Home</a>
+        <a href="../search/index.html">Search</a>
+        <a href="../tutorials/index.html">Tutorials</a>
+        <a href="../simulator/index.html" target="_blank">Launch Simulator</a>
+      </div>
+      <div class="footer-copy">
+        &copy; 2026 SPICE Suite Contributors. Available on Web (WASM) &middot; Windows &middot; Linux
+      </div>
+    </div>
+  </footer>
+</body>
+</html>

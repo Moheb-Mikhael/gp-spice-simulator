@@ -349,43 +349,94 @@ a:hover {
   margin: 0 auto 32px;
 }
 
-/* --- Tool Preview --- */
+/* --- Tool Showcase --- */
 #tool {
   background: var(--surface);
 }
 
-.tool-preview {
-  max-width: var(--max-width);
-  margin: 0 auto;
-  text-align: center;
+.tool-showcase {
+  max-width: 860px;
+  margin: 0 auto 40px;
 }
 
-.tool-screenshot {
+.tool-mockup {
   border-radius: var(--radius);
   border: 1px solid var(--border);
   overflow: hidden;
-  margin-bottom: 32px;
-  box-shadow: var(--shadow);
-  background: #1a1a2e;
-  aspect-ratio: 16 / 10;
+  box-shadow: 0 8px 32px rgba(45, 43, 40, 0.1);
+  margin-bottom: 28px;
+}
+
+.mockup-header {
+  background: #2d2b28;
+  padding: 10px 16px;
   display: flex;
   align-items: center;
-  justify-content: center;
-  color: var(--text-muted);
-  font-size: 0.9rem;
-  position: relative;
+  gap: 8px;
 }
 
-.tool-screenshot .sim-placeholder {
+.mockup-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #555;
+}
+
+.mockup-dot:nth-child(1) { background: #ff5f56; }
+.mockup-dot:nth-child(2) { background: #ffbd2e; }
+.mockup-dot:nth-child(3) { background: #27c93f; }
+
+.mockup-title {
+  margin-left: auto;
+  font-size: 0.75rem;
   color: rgba(255,255,255,0.5);
+  font-family: 'Inter', sans-serif;
+}
+
+.mockup-body {
+  background: #1e1e2e;
+  display: flex;
+  min-height: 240px;
+}
+
+.mockup-sidebar {
+  background: #181825;
+  padding: 16px 12px;
+  min-width: 60px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: flex-end;
+}
+
+.mockup-line {
+  height: 10px;
+  border-radius: 4px;
+  background: rgba(255,255,255,0.08);
+}
+
+.mockup-main {
+  flex: 1;
+  padding: 16px 20px;
+}
+
+.mockup-code {
   font-family: 'JetBrains Mono', monospace;
   font-size: 0.85rem;
-  text-align: center;
-  padding: 20px;
+  line-height: 1.7;
+  color: #cdd6f4;
 }
 
-.tool-cta {
-  margin-bottom: 40px;
+.tool-launch-row {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.btn-lg {
+  padding: 16px 36px;
+  font-size: 1.05rem;
 }
 
 .tool-quickstart {

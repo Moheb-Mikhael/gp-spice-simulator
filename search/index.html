@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <title>Documentation — SPICE Post-Processing Suite</title>
+  <meta name="description" content="Complete SPICE command reference. Search and browse all post-processing commands, measurements, and calculator functions.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css?v=3">
+  <link rel="stylesheet" href="style.css?v=3">
+</head>
+<body class="page-search">
+
+  <nav id="navbar">
+    <div class="nav-inner">
+      <div class="nav-brand">
+        <span class="brand-accent">&#x25B3;</span>
+        SPICE <span class="brand-accent">Suite</span>
+      </div>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="../index.html">Home</a></li>
+        <li><a href="../index.html#about">About</a></li>
+        <li><a href="../index.html#vision">Vision</a></li>
+        <li><a href="../tutorials/index.html">Tutorials</a></li>
+        <li><a href="../download/index.html">Download</a></li>
+        <li><a href="../simulator/index.html" target="_blank" class="nav-cta">Launch Simulator &rarr;</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main class="search-page-main">
+    <div class="search-page-header">
+      <h1>Command Documentation</h1>
+      <p>Search and browse every SPICE post-processing command — system, database, export, plot, measurement, and calculator.</p>
+    </div>
+
+    <div class="search-page-controls">
+      <div class="search-box search-page-box">
+        <span class="search-icon">&#x1F50E;</span>
+        <input type="text" id="searchInput" placeholder="Search by name, syntax, or description..." autocomplete="off">
+      </div>
+      <div class="category-filters" id="categoryFilters">
+        <button class="active" data-cat="all">All</button>
+        <button data-cat="System">System</button>
+        <button data-cat="Database">Database</button>
+        <button data-cat="Export">Export</button>
+        <button data-cat="Plotting">Plotting</button>
+        <button data-cat="Measurement">Measurement</button>
+        <button data-cat="Calculator">Calculator</button>
+      </div>
+    </div>
+
+    <div class="search-page-results" id="searchResults">
+      <div class="results-list" id="resultsList"></div>
+      <div class="detail-panel" id="detailPanel">
+        <button class="detail-back" id="detailBack">&larr; Back to results</button>
+        <div id="detailContent"></div>
+      </div>
+    </div>
+  </main>
+
+  <footer id="footer">
+    <div class="footer-inner">
+      <div class="footer-links">
+        <a href="../index.html">Home</a>
+        <a href="../tutorials/index.html">Tutorials</a>
+        <a href="../download/index.html">Download</a>
+        <a href="../simulator/index.html" target="_blank">Launch Simulator</a>
+      </div>
+      <div class="footer-copy">
+        &copy; 2026 SPICE Suite Contributors. Available on Web (WASM) &middot; Windows &middot; Linux
+      </div>
+    </div>
+  </footer>
+
+  <script src="../data/commands.json?v=3" id="commandsData" type="application/json"></script>
+  <script src="app.js?v=3"></script>
+</body>
+</html>

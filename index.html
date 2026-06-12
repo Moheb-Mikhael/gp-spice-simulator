@@ -11,7 +11,7 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css?v=2">
+  <link rel="stylesheet" href="css/style.css?v=3">
 </head>
 <body>
 
@@ -26,8 +26,9 @@
         <li><a href="#about">About</a></li>
         <li><a href="#vision">Vision</a></li>
         <li><a href="#tool">Tool</a></li>
-        <li><a href="#search">Search</a></li>
-        <li><a href="#tutorials">Tutorials</a></li>
+        <li><a href="search/index.html" target="_blank">Search</a></li>
+        <li><a href="tutorials/index.html" target="_blank">Tutorials</a></li>
+        <li><a href="download/index.html" target="_blank">Download</a></li>
         <li><a href="#qa">Q&amp;A</a></li>
         <li><a href="simulator/index.html" target="_blank" class="nav-cta">Launch Simulator &rarr;</a></li>
       </ul>
@@ -131,43 +132,49 @@
   <!-- ======== TOOL SECTION ======== -->
   <section id="tool" class="section">
     <div class="section-header">
-      <h2>Get the Tool</h2>
+      <h2>Try the Simulator</h2>
       <div class="section-divider"></div>
-      <p>Choose your platform &mdash; web, Windows, or Linux. Same engine, same workflow.</p>
+      <p>Open it in a new tab and start simulating. No account, no setup.</p>
     </div>
-    <div class="about-grid" style="margin-bottom: 48px;">
-
-      <div class="about-card" style="text-align: center;">
-        <div class="icon" style="margin: 0 auto 18px;">&#x1F310;</div>
-        <h3>Web (WASM)</h3>
-        <p>Launch the full post-processing suite directly in your browser. No install, no account. Runs locally via WebAssembly.</p>
-        <div style="margin-top: 20px;">
-          <a href="simulator/index.html" target="_blank" class="btn btn-primary" style="font-size:0.85rem;padding:10px 24px;">Launch in Browser &rarr;</a>
+    <div class="tool-showcase">
+      <div class="tool-mockup">
+        <div class="mockup-header">
+          <span class="mockup-dot"></span>
+          <span class="mockup-dot"></span>
+          <span class="mockup-dot"></span>
+          <span class="mockup-title">SPICE Web Simulator</span>
+        </div>
+        <div class="mockup-body">
+          <div class="mockup-sidebar">
+            <div class="mockup-line" style="width:80%"></div>
+            <div class="mockup-line" style="width:60%"></div>
+            <div class="mockup-line" style="width:70%"></div>
+            <div class="mockup-line" style="width:50%"></div>
+            <div class="mockup-line" style="width:65%"></div>
+          </div>
+          <div class="mockup-main">
+            <div class="mockup-code">
+              <span style="color:#f7768e">*</span> <span style="color:#89ddff">RC Low-Pass Filter</span><br>
+              V1 in 0 DC 5 AC 1<br>
+              R1 in out <span style="color:#ff9e64">1k</span><br>
+              C1 out 0 <span style="color:#ff9e64">1u</span><br>
+              <span style="color:#bb9af7">.control</span><br>
+              &nbsp;&nbsp;tran 0.1m 5m<br>
+              &nbsp;&nbsp;plot time V(in) V(out)<br>
+              <span style="color:#bb9af7">.endc</span><br>
+              <span style="color:#bb9af7">.end</span>
+            </div>
+          </div>
         </div>
       </div>
-
-      <div class="about-card" style="text-align: center;">
-        <div class="icon" style="margin: 0 auto 18px;">&#x1F5A5;</div>
-        <h3>Windows</h3>
-        <p>Native Windows application. No browser needed. Download the installer for the best desktop experience.</p>
-        <div style="margin-top: 20px;">
-          <span class="btn btn-secondary" style="font-size:0.85rem;padding:10px 24px;opacity:0.6;cursor:default;">Download &mdash; Coming Soon</span>
-        </div>
+      <div class="tool-launch-row">
+        <a href="simulator/index.html" target="_blank" class="btn btn-primary btn-lg">Launch in Browser &rarr;</a>
+        <a href="download/index.html" target="_blank" class="btn btn-secondary btn-lg">Download Desktop</a>
       </div>
-
-      <div class="about-card" style="text-align: center;">
-        <div class="icon" style="margin: 0 auto 18px;">&#x1F427;</div>
-        <h3>Linux</h3>
-        <p>Native Linux build. Run the simulation engine and post-processor natively on your distribution.</p>
-        <div style="margin-top: 20px;">
-          <span class="btn btn-secondary" style="font-size:0.85rem;padding:10px 24px;opacity:0.6;cursor:default;">Download &mdash; Coming Soon</span>
-        </div>
-      </div>
-
     </div>
 
-    <div class="tool-quickstart" style="max-width: 700px; margin: 0 auto;">
-      <h4>Quick-start netlist &mdash; copy and run (any platform)</h4>
+    <div class="tool-quickstart">
+      <h4>Quick-start netlist &mdash; copy and run</h4>
       <pre><code>* RC Low-Pass Filter
 V1 in 0 DC 5 AC 1
 R1 in out 1k
@@ -185,15 +192,10 @@ C1 out 0 1u
     <div class="section-header">
       <h2>Search Documentation</h2>
       <div class="section-divider"></div>
-      <p>Look up SPICE commands, measurement functions, and calculator operations.</p>
+      <p>Full command reference with syntax, examples, and detailed descriptions for all 47 SPICE commands.</p>
     </div>
-    <div class="search-container">
-      <p class="search-scope">&#x1F50D; Tool-specific documentation &mdash; SPICE post-processing commands only</p>
-      <div class="search-box">
-        <span class="search-icon">&#x1F50E;</span>
-        <input type="text" id="searchInput" placeholder="Search commands, syntax, or categories..." autocomplete="off">
-      </div>
-      <div class="search-results" id="searchResults"></div>
+    <div style="text-align:center;">
+      <a href="search/index.html" target="_blank" class="btn btn-primary">Explore Full Documentation &rarr;</a>
     </div>
   </section>
 
@@ -202,112 +204,10 @@ C1 out 0 1u
     <div class="section-header">
       <h2>Tutorials</h2>
       <div class="section-divider"></div>
-      <p>Learn circuit simulation and post-processing step by step.</p>
+      <p>Learn circuit simulation and post-processing with MIT OCW videos and written guides.</p>
     </div>
-    <div class="tutorial-filters" id="tutorialFilters">
-      <button class="active" data-filter="all">All</button>
-      <button data-filter="circuit">Circuit Analysis</button>
-      <button data-filter="postproc">Post-Processing</button>
-      <button data-filter="calculator">Calculator</button>
-    </div>
-    <div class="tutorial-grid" id="tutorialGrid">
-
-      <div class="tutorial-card" data-tags="circuit">
-        <div class="card-media">
-          <div class="placeholder-vid">
-            <div>
-              <div style="font-size:1.5rem;margin-bottom:6px;">&#x25B6;</div>
-              <div>MIT OCW — Circuit Analysis</div>
-            </div>
-          </div>
-        </div>
-        <div class="card-body">
-          <span class="card-tag">Circuit Analysis</span>
-          <h4>Introduction to Circuit Simulation</h4>
-          <p>Fundamentals of SPICE netlists, component models, and running your first transient analysis.</p>
-        </div>
-      </div>
-
-      <div class="tutorial-card" data-tags="circuit">
-        <div class="card-media">
-          <div class="placeholder-vid">
-            <div>
-              <div style="font-size:1.5rem;margin-bottom:6px;">&#x25B6;</div>
-              <div>MIT OCW — MOSFETs</div>
-            </div>
-          </div>
-        </div>
-        <div class="card-body">
-          <span class="card-tag">Circuit Analysis</span>
-          <h4>MOSFET I-V Characteristics &amp; DC Sweep</h4>
-          <p>Use DC sweep analysis to plot MOSFET drain current vs. gate voltage. Understand weak to strong inversion.</p>
-        </div>
-      </div>
-
-      <div class="tutorial-card" data-tags="postproc">
-        <div class="card-media">
-          <div class="placeholder-vid">
-            <div>
-              <div style="font-size:1.5rem;margin-bottom:6px;">&#x25B6;</div>
-              <div>MIT OCW — Op-Amps</div>
-            </div>
-          </div>
-        </div>
-        <div class="card-body">
-          <span class="card-tag">Post-Processing</span>
-          <h4>Plotting &amp; Measuring Amplifier Response</h4>
-          <p>Run a transient analysis on an op-amp circuit, plot input/output, and measure rise time and delay.</p>
-        </div>
-      </div>
-
-      <div class="tutorial-card" data-tags="postproc">
-        <div class="card-media">
-          <div class="placeholder-vid">
-            <div>
-              <div style="font-size:1.5rem;margin-bottom:6px;">&#x25B6;</div>
-              <div>MIT OCW — Bode Plots</div>
-            </div>
-          </div>
-        </div>
-        <div class="card-body">
-          <span class="card-tag">Post-Processing</span>
-          <h4>AC Analysis &amp; Bode Plot Generation</h4>
-          <p>Set up an AC sweep, use <code>db()</code> to convert magnitude, and export publication-ready plots.</p>
-        </div>
-      </div>
-
-      <div class="tutorial-card" data-tags="calculator">
-        <div class="card-media">
-          <div class="placeholder-vid">
-            <div>
-              <div style="font-size:1.5rem;margin-bottom:6px;">&#x25B6;</div>
-              <div>MIT OCW — Signals</div>
-            </div>
-          </div>
-        </div>
-        <div class="card-body">
-          <span class="card-tag">Calculator</span>
-          <h4>Waveform Math with the calc Engine</h4>
-          <p>Add, subtract, multiply signals. Use <code>abs()</code>, <code>sqrt()</code>, and reduction functions to extract scalar values.</p>
-        </div>
-      </div>
-
-      <div class="tutorial-card" data-tags="calculator">
-        <div class="card-media">
-          <div class="placeholder-vid">
-            <div>
-              <div style="font-size:1.5rem;margin-bottom:6px;">&#x270D;</div>
-              <div>Written Guide</div>
-            </div>
-          </div>
-        </div>
-        <div class="card-body">
-          <span class="card-tag">Calculator</span>
-          <h4>Coming Soon: calc Reference Guide</h4>
-          <p>A deep dive into every calc operator, element-wise function, and reduction with real circuit examples.</p>
-        </div>
-      </div>
-
+    <div style="text-align:center;">
+      <a href="tutorials/index.html" target="_blank" class="btn btn-primary">Browse All Tutorials &rarr;</a>
     </div>
   </section>
 
@@ -342,8 +242,9 @@ C1 out 0 1u
         <a href="#about">About</a>
         <a href="#vision">Vision</a>
         <a href="#tool">Tool</a>
-        <a href="#search">Search</a>
-        <a href="#tutorials">Tutorials</a>
+        <a href="search/index.html" target="_blank">Search</a>
+        <a href="tutorials/index.html" target="_blank">Tutorials</a>
+        <a href="download/index.html" target="_blank">Download</a>
         <a href="#qa">Q&amp;A</a>
         <a href="simulator/index.html" target="_blank">Launch Simulator</a>
       </div>
@@ -357,7 +258,6 @@ C1 out 0 1u
     </div>
   </footer>
 
-  <script src="data/commands.json?v=2" id="commands-data" type="application/json"></script>
-  <script src="js/main.js?v=2"></script>
+  <script src="js/main.js?v=3"></script>
 </body>
 </html>
