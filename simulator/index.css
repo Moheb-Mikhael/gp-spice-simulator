@@ -452,3 +452,45 @@ select:focus {
         display: none;
     }
 }
+
+/* ── PostProcess Command Bar ──────────────────────────────────────────── */
+#pp-bar {
+    display: flex;
+    align-items: center;
+    padding: 6px 12px;
+    border-top: 1px solid var(--border);
+    background: var(--bg-tertiary);
+    gap: 8px;
+    flex-shrink: 0;
+}
+
+#pp-prompt {
+    color: var(--accent-green);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    font-weight: 600;
+    user-select: none;
+}
+
+#pp-input {
+    flex: 1;
+    background: var(--bg-primary);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    color: var(--text-primary);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    padding: 6px 10px;
+    outline: none;
+    transition: var(--transition);
+}
+
+#pp-input:focus {
+    border-color: var(--accent-gold);
+    box-shadow: 0 0 0 2px rgba(201, 162, 60, 0.15);
+}
+
+#pp-input::placeholder {
+    color: var(--text-muted);
+    font-size: 12px;
+}

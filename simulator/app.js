@@ -112,6 +112,8 @@
     var tabConsole = document.getElementById('tab-console');
     var tabPlot = document.getElementById('tab-plot');
     var plotContainer = document.getElementById('plot-container');
+    var ppInput = document.getElementById('pp-input');
+    var btnPpRun = document.getElementById('btn-pp-run');
 
     currentChart = echarts.init(document.getElementById('chart'));
     window.addEventListener('resize', function () { currentChart.resize(); });
@@ -427,5 +429,115 @@
 
       applyChartTheme();
     }
+
+    // ── PostProcess command dispatch ──────────────────────────────────────
+    function executePPCommand(cmd) {
+      if (!cmd || !spiceModule) return;
+      log('spice> ' + cmd + '\n');
+
+      var parts = cmd.match(/(?:[^\s"]+|"[^"]*")+/g) || [];
+      var action = parts[0].toLowerCase();
+
+      switch (action) {
+        case 'calc': {
+          var expr = parts.slice(1).join(' ');
+          if (!expr) { log('  Usage: calc <expression>\n', 'error'); break; }
+          var res = JSON.parse(spiceModule.calc(expr));
+          if (res.status === 'error') {
+            log('  Error: ' + res.error + '\n', 'error');
+          } else if (res.type === 'scalar') {
+            log('  = ' + res.value + '\n');
+          } else {
+            log('  [wave, ' + res.size + ' pts]\n');
+          }
+          break;
+        }
+        case 'meas': {
+          var measCmd = parts.slice(1).join(' ');
+          if (!measCmd) { log('  Usage: meas <type> <signal> [params]\n', 'error'); break; }
+          var res = JSON.parse(spiceModule.meas(measCmd));
+          if (res.status === 'error') {
+            log('  Error: ' + res.error + '\n', 'error');
+          } else {
+            log('  ' + res.name + ' ' + res.signal + ' = ' + res.value + ' ' + res.unit + '\n');
+          }
+          break;
+        }
+        case 'db':
+        case 'records': {
+          var records = JSON.parse(spiceModule.dbRecords());
+          if (records.length === 0) { log('  (no records loaded)\n'); break; }
+          log('  Tag                    Type   Points  Signals\n');
+          log('  ' + '-'.repeat(55) + '\n');
+          records.forEach(function (r) {
+            var tag = (r.tag + '                    ').slice(0, 22);
+            var pts = String(r.numPoints);
+            var sigs = String(r.numSignals);
+            log('  ' + tag + (r.type + '      ').slice(0, 7) +
+                (pts + '      ').slice(0, 7) + sigs + '\n');
+          });
+          break;
+        }
+        case 'signals':
+        case 'list': {
+          var tag = parts[1] || '';
+          if (!tag) { log('  Usage: signals <tag>\n', 'error'); break; }
+          var signals = JSON.parse(spiceModule.dbSignals(tag));
+          if (signals.length === 0) { log('  (no signals)\n'); break; }
+          log('  Signals in "' + tag + '":\n');
+          signals.forEach(function (s) { log('    ' + s + '\n'); });
+          break;
+        }
+        case 'plot': {
+          var tag = parts[1] || '';
+          if (!tag) { log('  Usage: plot <tag>\n', 'error'); break; }
+          var pd = JSON.parse(spiceModule.plotData(tag, ''));
+          if (pd.error) { log('  Error: ' + pd.error + '\n', 'error'); break; }
+          renderPlot(pd);
+          log('  Plot rendered for "' + tag + '"\n');
+          tabPlot.click();
+          break;
+        }
+        case 'export': {
+          var tag = parts[1] || '';
+          if (!tag) { log('  Usage: export <tag> [signals...]\n', 'error'); break; }
+          var csv = spiceModule.exportCSV(tag, parts.slice(2).join(','));
+          if (!csv) { log('  (no data)\n'); break; }
+          var blob = new Blob([csv], { type: 'text/csv' });
+          var url = URL.createObjectURL(blob);
+          var a = document.createElement('a');
+          a.href = url; a.download = tag + '.csv'; a.click();
+          URL.revokeObjectURL(url);
+          log('  Downloaded "' + tag + '.csv"\n');
+          break;
+        }
+        case 'help': {
+          log('  Commands:\n');
+          log('    calc <expr>         Evaluate expression (e.g. V(out)*2)\n');
+          log('    meas <type> <sig>   Measurement (e.g. max V(out))\n');
+          log('    db                  List loaded records\n');
+          log('    signals <tag>       List signals in a record\n');
+          log('    plot <tag>          Plot all signals for a record\n');
+          log('    export <tag>        Download CSV of all signals\n');
+          log('    help                Show this help\n');
+          break;
+        }
+        default:
+          log('  Unknown command: "' + action + '". Type "help" for available commands.\n', 'error');
+      }
+    }
+
+    // ── PostProcess UI events ─────────────────────────────────────────────
+    btnPpRun.addEventListener('click', function () {
+      executePPCommand(ppInput.value.trim());
+      ppInput.value = '';
+    });
+
+    ppInput.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter') {
+        executePPCommand(ppInput.value.trim());
+        ppInput.value = '';
+      }
+    });
   });
 })();

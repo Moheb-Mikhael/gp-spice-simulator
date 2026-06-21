@@ -13,7 +13,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">    
 <script src="https://cdn.jsdelivr.net/npm/echarts@5.5.0/dist/echarts.min.js">
 </script>    
-<link rel="stylesheet" href="index.css?v=8">
+<link rel="stylesheet" href="index.css?v=10">
 </head>
 <body>    
 <header id="header">        
@@ -85,9 +85,14 @@
 <div id="chart" style="width: 100%; height: 100%;">
 </div>                
 </div>            
-</div>        
-</section>    
-</main>    
+    </div>        
+        </section>    
+    </main>    
+    <div id="pp-bar">
+        <span id="pp-prompt">spice></span>
+        <input type="text" id="pp-input" placeholder="Type a command (calc, meas, db, signals, plot, export, help)...">
+        <button id="btn-pp-run" class="btn btn-primary" style="padding:6px 14px;font-size:13px;">Run</button>
+    </div>
 <footer id="footer">        
 <span>SPICE Suite &middot; Open source &middot; Made with 
 <span class="heart">&#x2764;
@@ -96,9 +101,9 @@
 <span class="footer-tech">WebAssembly &middot; All computation runs locally in your browser
 </span>    
 </footer>    
-<script src="./spice_engine.js?v=8">
+<script src="./spice_engine.js?v=10">
 </script>    
-<script src="app.js?v=8">
+<script src="app.js?v=10">
 </script>
 </body>
 </html>
