@@ -829,12 +829,8 @@
           break;
         }
         case 'plot': {
-          var tag = parts[1] || '';
-          if (!tag) { log('  Usage: plot <tag> [sig1 sig2...] [--title t]\n', 'error'); break; }
-          var recs = JSON.parse(spiceModule.dbRecords());
-          var rec = resolveRecord(recs, tag);
-          if (!rec) { log('  Record not found: "' + tag + '"\n', 'error'); break; }
-          tag = rec.tag;
+          if (parts.length < 3) { log('  Usage: plot <xsig> <y1> [y2...] [--title t]\n', 'error'); break; }
+          var xsig = parts[1];
           var ySigs = [];
           var title = '';
           for (var pi = 2; pi < parts.length; pi++) {
@@ -844,14 +840,34 @@
               ySigs.push(parts[pi]);
             }
           }
-          var pd = JSON.parse(spiceModule.plotData(tag, ySigs.join(',')));
+          if (ySigs.length === 0) { log('  Error: no Y-axis signals\n', 'error'); break; }
+          var records = JSON.parse(spiceModule.dbRecords());
+          if (records.length === 0) { log('  (no records loaded)\n'); break; }
+          // Find record whose xName matches xsig
+          var rec = null;
+          var xLower = xsig.toLowerCase();
+          for (var i = 0; i < records.length; i++) {
+            if (records[i].xName.toLowerCase() === xLower) { rec = records[i]; break; }
+          }
+          // Fallback: match xsig as a regular signal
+          if (!rec) {
+            for (var i = 0; i < records.length; i++) {
+              var sigs = JSON.parse(spiceModule.dbSignals(records[i].tag));
+              for (var j = 0; j < sigs.length; j++) {
+                if (sigs[j].toLowerCase() === xLower) { rec = records[i]; break; }
+              }
+              if (rec) break;
+            }
+          }
+          if (!rec) { log('  Record not found for "' + xsig + '"\n', 'error'); break; }
+          var pd = JSON.parse(spiceModule.plotData(rec.tag, ySigs.join(',')));
           if (pd.error) { log('  Error: ' + pd.error + '\n', 'error'); break; }
           if (title) { pd.title = title; }
           plotsData = [pd];
           currentPlotIndex = 0;
           updatePlotTabs();
           renderPlot(pd);
-          log('  Plot rendered for "' + tag + '"\n');
+          log('  Plot rendered for "' + rec.tag + '"\n');
           tabPlot.click();
           break;
         }
@@ -878,7 +894,7 @@
           log('    print <tag> [sigs]  Print signal values (max 50 rows)\n');
           log('    calc <expr>         Evaluate expression (e.g. V(out)*2)\n');
           log('    meas <type> <sig>   Measurement (max, min, avg, rms, trise...)\n');
-          log('    plot <tag> [y1 y2]  Plot signals for a record\n');
+            log('    plot <xsig> <y1> [y2]  Plot signals vs x (auto-finds record)\n');
           log('    export <tag> [sigs] Download CSV\n');
           log('    help                Show this help\n');
           break;
