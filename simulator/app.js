@@ -114,6 +114,11 @@
     var plotContainer = document.getElementById('plot-container');
     var ppInput = document.getElementById('pp-input');
     var btnPpRun = document.getElementById('btn-pp-run');
+    var btnOpen = document.getElementById('btn-open');
+    var fileInput = document.getElementById('file-input');
+    var btnDlCsv = document.getElementById('btn-download-csv');
+    var btnExportRaw = document.getElementById('btn-export-raw');
+    var btnSaveLog = document.getElementById('btn-save-log');
 
     currentChart = echarts.init(document.getElementById('chart'));
     window.addEventListener('resize', function () { currentChart.resize(); });
@@ -144,6 +149,24 @@
         nums.push(i);
       }
       lineNumbers.innerHTML = nums.join('<br>');
+    }
+
+    function download(filename, content, mime) {
+      var blob = new Blob([content], { type: mime });
+      var url = URL.createObjectURL(blob);
+      var a = document.createElement('a');
+      a.href = url;
+      a.download = filename;
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+
+    function updateRecordButtons() {
+      if (!spiceModule) { btnDlCsv.disabled = true; btnExportRaw.disabled = true; return; }
+      var records = JSON.parse(spiceModule.dbRecords());
+      var hasRecords = records.length > 0;
+      btnDlCsv.disabled = !hasRecords;
+      btnExportRaw.disabled = !hasRecords;
     }
 
     selectExample.addEventListener('change', function (e) {
@@ -225,6 +248,7 @@
         statusIndicator.textContent = 'Ready';
         statusIndicator.className = 'status-ready';
         btnRun.disabled = false;
+        updateRecordButtons();
         log('WASM Module loaded successfully.\n', 'success');
       }).catch(function (err) {
         statusIndicator.textContent = 'Error loading WASM';
@@ -282,7 +306,115 @@
         btnRun.classList.remove('running');
         statusIndicator.textContent = 'Ready';
         statusIndicator.className = 'status-ready';
+        updateRecordButtons();
       }
+    });
+
+    // ── File I/O ──────────────────────────────────────────────────────────
+    function arrayBufferToBinaryString(buf) {
+      var bytes = new Uint8Array(buf);
+      var s = '';
+      for (var i = 0; i < bytes.length; i++) s += String.fromCharCode(bytes[i]);
+      return s;
+    }
+
+    function handleFile(file) {
+      var reader = new FileReader();
+      var isRaw = file.name.toLowerCase().endsWith('.raw');
+      reader.onload = function (e) {
+        var content = isRaw ? arrayBufferToBinaryString(e.target.result) : e.target.result;
+        if (isRaw) {
+          if (!spiceModule) { log('WASM not ready yet.\n', 'error'); return; }
+          var res = JSON.parse(spiceModule.loadRawFile(file.name, content));
+          if (res.status === 'success') {
+            log('Loaded .raw file "' + file.name + '" as tag "' + res.tag + '"\n', 'success');
+            updateRecordButtons();
+          } else {
+            log('Error loading .raw file: ' + res.msg + '\n', 'error');
+          }
+        } else {
+          editor.value = content;
+          updateLineNumbers();
+          log('Loaded netlist from "' + file.name + '" (' + content.split('\n').length + ' lines)\n', 'success');
+        }
+      };
+      if (isRaw) {
+        reader.readAsArrayBuffer(file);
+      } else {
+        reader.readAsText(file);
+      }
+    }
+
+    btnOpen.addEventListener('click', function () {
+      fileInput.click();
+    });
+
+    fileInput.addEventListener('change', function () {
+      var file = fileInput.files[0];
+      if (!file) return;
+      handleFile(file);
+      fileInput.value = '';
+    });
+
+    // ── Drag & Drop on editor ─────────────────────────────────────────────
+    var editorContainer = document.querySelector('.editor-container');
+
+    editorContainer.addEventListener('dragover', function (e) {
+      e.preventDefault();
+      e.stopPropagation();
+      editorContainer.classList.add('drag-over');
+    });
+
+    editorContainer.addEventListener('dragleave', function (e) {
+      e.preventDefault();
+      e.stopPropagation();
+      editorContainer.classList.remove('drag-over');
+    });
+
+    editorContainer.addEventListener('drop', function (e) {
+      e.preventDefault();
+      e.stopPropagation();
+      editorContainer.classList.remove('drag-over');
+      var file = e.dataTransfer.files[0];
+      if (!file) return;
+      handleFile(file);
+    });
+
+    // ── Download All as CSV ───────────────────────────────────────────────
+    btnDlCsv.addEventListener('click', function () {
+      if (!spiceModule) return;
+      var records = JSON.parse(spiceModule.dbRecords());
+      if (records.length === 0) { log('No records to export.\n', 'warning'); return; }
+      records.forEach(function (rec) {
+        var csv = spiceModule.exportCSV(rec.tag, "");
+        if (csv) {
+          download(rec.tag + '.csv', csv, 'text/csv');
+        }
+      });
+      log('Downloaded ' + records.length + ' CSV file(s).\n', 'success');
+    });
+
+    // ── Export RAW ────────────────────────────────────────────────────────
+    btnExportRaw.addEventListener('click', function () {
+      if (!spiceModule) return;
+      var records = JSON.parse(spiceModule.dbRecords());
+      if (records.length === 0) { log('No records to export.\n', 'warning'); return; }
+      records.forEach(function (rec) {
+        var raw = spiceModule.exportRaw(rec.tag);
+        if (raw) {
+          download(rec.tag + '.raw', raw, 'application/octet-stream');
+        }
+      });
+      log('Downloaded ' + records.length + ' RAW file(s).\n', 'success');
+    });
+
+    // ── Save Console Log ──────────────────────────────────────────────────
+    btnSaveLog.addEventListener('click', function () {
+      var text = consoleOut.innerText || consoleOut.textContent;
+      if (!text) { log('Console is empty.\n', 'warning'); return; }
+      var dateStr = new Date().toISOString().replace(/[:.]/g, '-').slice(0, 19);
+      download('simulation_log_' + dateStr + '.txt', text, 'text/plain');
+      log('Console log saved.\n', 'success');
     });
 
     function renderPlot(data) {

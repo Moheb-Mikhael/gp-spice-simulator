@@ -13,7 +13,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">    
 <script src="https://cdn.jsdelivr.net/npm/echarts@5.5.0/dist/echarts.min.js">
 </script>    
-<link rel="stylesheet" href="index.css?v=10">
+<link rel="stylesheet" href="index.css?v=12">
 </head>
 <body>    
 <header id="header">        
@@ -51,9 +51,22 @@
 <option value="diode_iv">Diode I-V Curve (DC Sweep)
 </option>        
 </select>        
-<button id="btn-clear" class="btn btn-secondary">Clear Output
+        <button id="btn-open" class="btn btn-secondary">
+            <span class="icon">&#x1F4C2;</span> Open Netlist
+        </button>
+        <input type="file" id="file-input" accept=".cir,.sp,.net,.txt,.raw" style="display:none">
+        <button id="btn-download-csv" class="btn btn-secondary" disabled>
+            <span class="icon">&#x1F4E5;</span> Download CSV
+        </button>
+        <button id="btn-export-raw" class="btn btn-secondary" disabled>
+            <span class="icon">&#x1F4BE;</span> Export RAW
+        </button>
+        <button id="btn-save-log" class="btn btn-secondary">
+            <span class="icon">&#x1F4DD;</span> Save Log
+        </button>
+        <button id="btn-clear" class="btn btn-secondary">Clear Output
 </button>        
-<div id="status-indicator" class="status-loading">Loading WebAssembly...
+        <div id="status-indicator" class="status-loading">Loading WebAssembly...
 </div>    
 </div>    
 <main id="main-content">        
@@ -101,9 +114,9 @@
 <span class="footer-tech">WebAssembly &middot; All computation runs locally in your browser
 </span>    
 </footer>    
-<script src="./spice_engine.js?v=10">
+<script src="./spice_engine.js?v=12">
 </script>    
-<script src="app.js?v=10">
+<script src="app.js?v=12">
 </script>
 </body>
 </html>

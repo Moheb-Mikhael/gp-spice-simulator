@@ -378,6 +378,13 @@ select:focus {
     padding: 1rem;
 }
 
+/* ===== DRAG-OVER STATE ===== */
+.editor-container.drag-over #netlist-editor {
+    outline: 3px dashed var(--accent-gold);
+    outline-offset: -6px;
+    background-color: var(--bg-overlay);
+}
+
 /* ===== SCROLLBARS ===== */
 ::-webkit-scrollbar {
     width: 8px;
