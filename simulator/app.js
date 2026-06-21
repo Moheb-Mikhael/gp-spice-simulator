@@ -330,27 +330,7 @@
           renderPlot(plotsData[0]);
           updatePlotTabs();
           tabPlot.click();
-        } else if (directives.length === 0) {
-          // No plot directives — fallback: auto-plot all records
-          records.forEach(function (rec) {
-            var pdStr = spiceModule.plotData(rec.tag, "");
-            if (!pdStr) return;
-            try {
-              var pd = JSON.parse(pdStr);
-              if (pd.error) {
-                log('Plot error: ' + pd.error + '\n', 'error');
-                return;
-              }
-              plotsData = [pd];
-              currentPlotIndex = 0;
-              renderPlot(pd);
-              updatePlotTabs();
-              tabPlot.click();
-            } catch (e) {
-              log('Plot data error: ' + e + '\n', 'error');
-            }
-          });
-        } else {
+        } else if (directives.length > 0) {
           log('No matching plots from netlist directives.\n', 'warning');
         }
       } catch (err) {
