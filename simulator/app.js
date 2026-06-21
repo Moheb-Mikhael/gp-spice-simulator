@@ -773,15 +773,34 @@
           break;
         }
         case 'print': {
-          if (parts.length < 2) { log('  Usage: print <tag> <sig1> [sig2...]\n', 'error'); break; }
-          var tag = parts[1];
+          if (parts.length < 2) { log('  Usage: print <sig1> [sig2...]\n', 'error'); break; }
           var recs = JSON.parse(spiceModule.dbRecords());
-          var rec = resolveRecord(recs, tag);
-          if (!rec) { log('  Record not found: "' + tag + '"\n', 'error'); break; }
-          tag = rec.tag;
-          var sigNames = parts.slice(2);
-          if (sigNames.length === 0) {
-            sigNames = JSON.parse(spiceModule.dbSignals(tag));
+          if (recs.length === 0) { log('  (no records loaded)\n'); break; }
+          var rec = resolveRecord(recs, parts[1]);
+          var tag, sigNames;
+          if (rec) {
+            tag = rec.tag;
+            sigNames = parts.slice(2);
+            if (sigNames.length === 0) {
+              sigNames = JSON.parse(spiceModule.dbSignals(tag));
+            }
+          } else {
+            // Auto-find record containing all requested signals
+            var candidates = parts.slice(1);
+            for (var i = 0; i < recs.length; i++) {
+              var sigs = JSON.parse(spiceModule.dbSignals(recs[i].tag));
+              var sigsLower = sigs.map(function(s) { return s.toLowerCase(); });
+              var xLower = recs[i].xName.toLowerCase();
+              var allFound = true;
+              for (var j = 0; j < candidates.length; j++) {
+                var cl = candidates[j].toLowerCase();
+                if (cl !== xLower && sigsLower.indexOf(cl) < 0) { allFound = false; break; }
+              }
+              if (allFound) { rec = recs[i]; break; }
+            }
+            if (!rec) { log('  Record not found\n', 'error'); break; }
+            tag = rec.tag;
+            sigNames = candidates;
           }
           if (sigNames.length === 0) { log('  (no signals in "' + tag + '")\n'); break; }
           var maxRows = 50;
@@ -891,7 +910,7 @@
           log('    db / records        List all loaded records\n');
           log('    info [tag]          Show record metadata\n');
           log('    signals / list <tag>  List signals in a record\n');
-          log('    print <tag> [sigs]  Print signal values (max 50 rows)\n');
+            log('    print <sig1> [sigs] Print signal values (max 50 rows)\n');
           log('    calc <expr>         Evaluate expression (e.g. V(out)*2)\n');
           log('    meas <type> <sig>   Measurement (max, min, avg, rms, trise...)\n');
             log('    plot <xsig> <y1> [y2]  Plot signals vs x (auto-finds record)\n');
