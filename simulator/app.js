@@ -256,22 +256,23 @@
           log('Simulation finished successfully.\n', 'success');
         }
 
-        var lines = editor.value.split('\n');
-        for (var i = 0; i < lines.length; i++) {
-          var line = lines[i].trim();
-          if (line.toLowerCase().indexOf('plot ') === 0) {
-            log('Executing postprocess: ' + line + '\n');
-            var ppStr = spiceModule.postprocess(line);
-            var ppRes = JSON.parse(ppStr);
-            if (ppRes.console_log) {
-              log(ppRes.console_log);
+        // Use new API to plot all loaded records
+        var records = JSON.parse(spiceModule.dbRecords());
+        records.forEach(function (rec) {
+          var pdStr = spiceModule.plotData(rec.tag, "");
+          if (!pdStr) return;
+          try {
+            var pd = JSON.parse(pdStr);
+            if (pd.error) {
+              log('Plot error: ' + pd.error + '\n', 'error');
+              return;
             }
-            if (ppRes.plot_data) {
-              renderPlot(ppRes.plot_data);
-              tabPlot.click();
-            }
+            renderPlot(pd);
+            tabPlot.click();
+          } catch (e) {
+            log('Plot data error: ' + e + '\n', 'error');
           }
-        }
+        });
       } catch (err) {
         log('Error: ' + err + '\n', 'error');
       } finally {
