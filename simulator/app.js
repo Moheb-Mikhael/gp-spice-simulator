@@ -680,6 +680,17 @@
       var parts = cmd.match(/(?:[^\s"]+|"[^"]*")+/g) || [];
       var action = parts[0].toLowerCase();
 
+      function resolveRecord(recs, arg) {
+        for (var i = 0; i < recs.length; i++) {
+          if (recs[i].tag === arg) return recs[i];
+        }
+        var lower = arg.toLowerCase();
+        for (var i = 0; i < recs.length; i++) {
+          if (recs[i].type.toLowerCase() === lower) return recs[i];
+        }
+        return null;
+      }
+
       switch (action) {
         case 'calc': {
           var expr = parts.slice(1).join(' ');
@@ -723,50 +734,73 @@
         case 'signals':
         case 'list': {
           var tag = parts[1] || '';
-          if (!tag) { log('  Usage: signals <tag>\n', 'error'); break; }
-          var signals = JSON.parse(spiceModule.dbSignals(tag));
-          if (signals.length === 0) { log('  (no signals)\n'); break; }
-          log('  Signals in "' + tag + '":\n');
+          var recs = JSON.parse(spiceModule.dbRecords());
+          if (recs.length === 0) { log('  (no records loaded)\n'); break; }
+          if (!tag) {
+            var seen = {}, count = 0, typeStr = '', firstType = '';
+            for (var i = 0; i < recs.length; i++) {
+              var t = recs[i].type;
+              if (!seen[t]) {
+                seen[t] = true;
+                if (count > 0) typeStr += ', ';
+                typeStr += t;
+                if (count === 0) firstType = t;
+                count++;
+              }
+            }
+            log('  Number of analysis is ' + count + ': ' + typeStr + '\n');
+            log('    Use list <type> for signals (e.g. list ' + firstType.toLowerCase() + ')\n');
+            break;
+          }
+          var rec = resolveRecord(recs, tag);
+          if (!rec) { log('  Record not found: "' + tag + '"\n', 'error'); break; }
+          var signals = JSON.parse(spiceModule.dbSignals(rec.tag));
+          log('  Signals in "' + rec.tag + '":\n');
+          log('    ' + rec.xName + ' [X-axis]\n');
           signals.forEach(function (s) { log('    ' + s + '\n'); });
           break;
         }
         case 'info': {
-          var records = JSON.parse(spiceModule.dbRecords());
-          if (records.length === 0) { log('  (no records loaded)\n'); break; }
+          var recs = JSON.parse(spiceModule.dbRecords());
+          if (recs.length === 0) { log('  (no records loaded)\n'); break; }
           var tag = parts[1] || '';
           if (!tag) {
-            records.forEach(function (r) {
-              log('  Tag: ' + r.tag + '\n');
-              log('    Type:    ' + r.type + '\n');
-              log('    Title:   ' + (r.title || '(none)') + '\n');
-              log('    Points:  ' + r.numPoints + '\n');
-              log('    X-axis:  ' + r.xName + '\n');
-              log('    Signals: ' + r.numSignals + '\n');
-              log('    Complex: ' + (r.isComplex ? 'yes' : 'no') + '\n');
-            });
-          } else {
-            var found = null;
-            for (var i = 0; i < records.length; i++) {
-              if (records[i].tag === tag) { found = records[i]; break; }
+            var seen = {}, count = 0, typeStr = '', firstType = '';
+            for (var i = 0; i < recs.length; i++) {
+              var t = recs[i].type;
+              if (!seen[t]) {
+                seen[t] = true;
+                if (count > 0) typeStr += ', ';
+                typeStr += t;
+                if (count === 0) firstType = t;
+                count++;
+              }
             }
-            if (!found) { log('  Record not found: "' + tag + '"\n', 'error'); break; }
-            log('  Tag:      ' + found.tag + '\n');
-            log('  Type:     ' + found.type + '\n');
-            log('  Title:    ' + (found.title || '(none)') + '\n');
-            log('  Date:     ' + (found.date || '(none)') + '\n');
-            log('  Points:   ' + found.numPoints + '\n');
-            log('  X-axis:   ' + found.xName + '\n');
-            log('  Signals:  ' + found.numSignals + '\n');
-            log('  Complex:  ' + (found.isComplex ? 'yes' : 'no') + '\n');
+            log('  Number of analysis is ' + count + ': ' + typeStr + '\n');
+            log('    Use info <type> for details (e.g. info ' + firstType.toLowerCase() + ')\n');
+            break;
           }
+          var rec = resolveRecord(recs, tag);
+          if (!rec) { log('  Record not found: "' + tag + '"\n', 'error'); break; }
+          log('  Tag:      ' + rec.tag + '\n');
+          log('  Type:     ' + rec.type + '\n');
+          log('  Title:    ' + (rec.title || '(none)') + '\n');
+          log('  Date:     ' + (rec.date || '(none)') + '\n');
+          log('  Points:   ' + rec.numPoints + '\n');
+          log('  X-axis:   ' + rec.xName + '\n');
+          log('  Signals:  ' + rec.numSignals + '\n');
+          log('  Complex:  ' + (rec.isComplex ? 'yes' : 'no') + '\n');
           break;
         }
         case 'print': {
           if (parts.length < 2) { log('  Usage: print <tag> <sig1> [sig2...]\n', 'error'); break; }
           var tag = parts[1];
+          var recs = JSON.parse(spiceModule.dbRecords());
+          var rec = resolveRecord(recs, tag);
+          if (!rec) { log('  Record not found: "' + tag + '"\n', 'error'); break; }
+          tag = rec.tag;
           var sigNames = parts.slice(2);
           if (sigNames.length === 0) {
-            // Print all signals in the record
             sigNames = JSON.parse(spiceModule.dbSignals(tag));
           }
           if (sigNames.length === 0) { log('  (no signals in "' + tag + '")\n'); break; }
@@ -817,6 +851,10 @@
         case 'plot': {
           var tag = parts[1] || '';
           if (!tag) { log('  Usage: plot <tag> [sig1 sig2...] [--title t]\n', 'error'); break; }
+          var recs = JSON.parse(spiceModule.dbRecords());
+          var rec = resolveRecord(recs, tag);
+          if (!rec) { log('  Record not found: "' + tag + '"\n', 'error'); break; }
+          tag = rec.tag;
           var ySigs = [];
           var title = '';
           for (var pi = 2; pi < parts.length; pi++) {
@@ -840,6 +878,10 @@
         case 'export': {
           var tag = parts[1] || '';
           if (!tag) { log('  Usage: export <tag> [sig1 sig2...]\n', 'error'); break; }
+          var recs = JSON.parse(spiceModule.dbRecords());
+          var rec = resolveRecord(recs, tag);
+          if (!rec) { log('  Record not found: "' + tag + '"\n', 'error'); break; }
+          tag = rec.tag;
           var sigs = parts.slice(2).join(',');
           var csv = spiceModule.exportCSV(tag, sigs);
           if (!csv) { log('  (no data)\n'); break; }
