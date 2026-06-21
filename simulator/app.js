@@ -42,6 +42,8 @@
 
   var spiceModule = null;
   var currentChart = null;
+  var plotsData = [];
+  var currentPlotIndex = -1;
 
   document.addEventListener('DOMContentLoaded', function () {
     var html = document.documentElement;
@@ -179,6 +181,10 @@
     btnClear.addEventListener('click', function () {
       consoleOut.innerHTML = '';
       currentChart.clear();
+      plotsData = [];
+      currentPlotIndex = -1;
+      var tabBar = document.getElementById('plot-tab-bar');
+      if (tabBar) { tabBar.style.display = 'none'; tabBar.innerHTML = ''; }
       tabConsole.click();
     });
 
@@ -282,23 +288,71 @@
           log('Simulation finished successfully.\n', 'success');
         }
 
-        // Use new API to plot all loaded records
+        // Parse netlist plot directives
+        var directives = parsePlotDirectives(netlist);
         var records = JSON.parse(spiceModule.dbRecords());
-        records.forEach(function (rec) {
-          var pdStr = spiceModule.plotData(rec.tag, "");
-          if (!pdStr) return;
-          try {
-            var pd = JSON.parse(pdStr);
-            if (pd.error) {
-              log('Plot error: ' + pd.error + '\n', 'error');
+
+        if (directives.length > 0) {
+          plotsData = [];
+          directives.forEach(function (sigList) {
+            var sigs = sigList.match(/(?:[^\s"]+|"[^"]*")+/g) || [];
+            if (sigs.length === 0) return;
+            var sigsLower = sigs.map(function (s) { return s.toLowerCase(); });
+            // Find record that contains all these signals
+            var matchedTag = null;
+            for (var r = 0; r < records.length; r++) {
+              var sigsInRecord = JSON.parse(spiceModule.dbSignals(records[r].tag));
+              var sigsInRecLower = sigsInRecord.map(function (s) { return s.toLowerCase(); });
+              var allFound = sigsLower.every(function (s) { return sigsInRecLower.indexOf(s) >= 0; });
+              if (allFound) { matchedTag = records[r].tag; break; }
+            }
+            if (!matchedTag) {
+              log('Plot directive "' + sigList + '" — signals not found in any record\n', 'warning');
               return;
             }
-            renderPlot(pd);
-            tabPlot.click();
-          } catch (e) {
-            log('Plot data error: ' + e + '\n', 'error');
-          }
-        });
+            var pdStr = spiceModule.plotData(matchedTag, sigs.join(','));
+            if (!pdStr) return;
+            try {
+              var pd = JSON.parse(pdStr);
+              if (!pd.error) {
+                pd._title = pd.title;
+                pd.title = 'Plot ' + (plotsData.length + 1) + ': ' + sigList;
+                plotsData.push(pd);
+              }
+            } catch (e) {
+              log('Plot parse error for "' + sigList + '"\n', 'error');
+            }
+          });
+        }
+
+        if (plotsData.length > 0) {
+          currentPlotIndex = 0;
+          renderPlot(plotsData[0]);
+          updatePlotTabs();
+          tabPlot.click();
+        } else if (directives.length === 0) {
+          // No plot directives — fallback: auto-plot all records
+          records.forEach(function (rec) {
+            var pdStr = spiceModule.plotData(rec.tag, "");
+            if (!pdStr) return;
+            try {
+              var pd = JSON.parse(pdStr);
+              if (pd.error) {
+                log('Plot error: ' + pd.error + '\n', 'error');
+                return;
+              }
+              plotsData = [pd];
+              currentPlotIndex = 0;
+              renderPlot(pd);
+              updatePlotTabs();
+              tabPlot.click();
+            } catch (e) {
+              log('Plot data error: ' + e + '\n', 'error');
+            }
+          });
+        } else {
+          log('No matching plots from netlist directives.\n', 'warning');
+        }
       } catch (err) {
         log('Error: ' + err + '\n', 'error');
       } finally {
@@ -416,6 +470,62 @@
       download('simulation_log_' + dateStr + '.txt', text, 'text/plain');
       log('Console log saved.\n', 'success');
     });
+
+    // ── Parse netlist plot directives ────────────────────────────────────
+    function parsePlotDirectives(netlist) {
+      var lines = netlist.split('\n');
+      var inControl = false;
+      var plots = [];
+      var analysisTypes = ['tran','transient','ac','dc','op'];
+
+      for (var i = 0; i < lines.length; i++) {
+        var line = lines[i].trim();
+        var lower = line.toLowerCase();
+
+        if (lower === '.control') { inControl = true; continue; }
+        if (lower === '.endc')    { inControl = false; continue; }
+
+        if (inControl && lower.startsWith('plot ')) {
+          var sigs = line.substring(5).trim();
+          if (sigs) plots.push(sigs);
+        }
+
+        if (!inControl && lower.startsWith('.plot ')) {
+          var rest = line.substring(6).trim();
+          var parts = rest.match(/(?:[^\s"]+|"[^"]*")+/g) || [];
+          if (parts.length > 0 && analysisTypes.indexOf(parts[0].toLowerCase()) >= 0) {
+            parts = parts.slice(1);
+          }
+          if (parts.length > 0) plots.push(parts.join(' '));
+        }
+      }
+      return plots;
+    }
+
+    // ── Multi-plot switching ─────────────────────────────────────────────
+    function switchPlot(index) {
+      if (index < 0 || index >= plotsData.length) return;
+      currentPlotIndex = index;
+      renderPlot(plotsData[index]);
+      var tabs = document.querySelectorAll('.plot-subtab');
+      tabs.forEach(function (t, i) { t.classList.toggle('active', i === index); });
+    }
+
+    function updatePlotTabs() {
+      var tabBar = document.getElementById('plot-tab-bar');
+      if (plotsData.length <= 1) { tabBar.style.display = 'none'; return; }
+      tabBar.style.display = 'flex';
+      tabBar.innerHTML = '';
+      plotsData.forEach(function (pd, idx) {
+        var tab = document.createElement('div');
+        tab.className = 'plot-subtab' + (idx === currentPlotIndex ? ' active' : '');
+        // Extract short label from pd.title (e.g. "Plot 1: V(in) V(out)")
+        var label = pd.title || 'Plot ' + (idx + 1);
+        tab.textContent = label;
+        tab.addEventListener('click', function () { switchPlot(idx); });
+        tabBar.appendChild(tab);
+      });
+    }
 
     function renderPlot(data) {
       if (!data) return;
@@ -620,11 +730,108 @@
           signals.forEach(function (s) { log('    ' + s + '\n'); });
           break;
         }
+        case 'info': {
+          var records = JSON.parse(spiceModule.dbRecords());
+          if (records.length === 0) { log('  (no records loaded)\n'); break; }
+          var tag = parts[1] || '';
+          if (!tag) {
+            records.forEach(function (r) {
+              log('  Tag: ' + r.tag + '\n');
+              log('    Type:    ' + r.type + '\n');
+              log('    Title:   ' + (r.title || '(none)') + '\n');
+              log('    Points:  ' + r.numPoints + '\n');
+              log('    X-axis:  ' + r.xName + '\n');
+              log('    Signals: ' + r.numSignals + '\n');
+              log('    Complex: ' + (r.isComplex ? 'yes' : 'no') + '\n');
+            });
+          } else {
+            var found = null;
+            for (var i = 0; i < records.length; i++) {
+              if (records[i].tag === tag) { found = records[i]; break; }
+            }
+            if (!found) { log('  Record not found: "' + tag + '"\n', 'error'); break; }
+            log('  Tag:      ' + found.tag + '\n');
+            log('  Type:     ' + found.type + '\n');
+            log('  Title:    ' + (found.title || '(none)') + '\n');
+            log('  Date:     ' + (found.date || '(none)') + '\n');
+            log('  Points:   ' + found.numPoints + '\n');
+            log('  X-axis:   ' + found.xName + '\n');
+            log('  Signals:  ' + found.numSignals + '\n');
+            log('  Complex:  ' + (found.isComplex ? 'yes' : 'no') + '\n');
+          }
+          break;
+        }
+        case 'print': {
+          if (parts.length < 2) { log('  Usage: print <tag> <sig1> [sig2...]\n', 'error'); break; }
+          var tag = parts[1];
+          var sigNames = parts.slice(2);
+          if (sigNames.length === 0) {
+            // Print all signals in the record
+            sigNames = JSON.parse(spiceModule.dbSignals(tag));
+          }
+          if (sigNames.length === 0) { log('  (no signals in "' + tag + '")\n'); break; }
+          var maxRows = 50;
+          var totalPts = 0;
+          var allData = [];
+          // Collect X data and Y data for each signal
+          var xData = null;
+          for (var si = 0; si < sigNames.length; si++) {
+            var sd = JSON.parse(spiceModule.dbSignalData(tag, sigNames[si]));
+            if (sd.error) { log('  Error: ' + sd.error + '\n', 'error'); continue; }
+            if (!xData) xData = sd.x;
+            if (si === 0) totalPts = sd.x.length;
+            allData.push({ name: sigNames[si], y: sd.y });
+          }
+          if (!xData || allData.length === 0) break;
+          // Print header
+          var header = '  ' + (xData.length > 0 ? 'x'.padEnd(20) : '');
+          allData.forEach(function (d) { header += d.name.padEnd(22); });
+          log(header + '\n');
+          log('  ' + '-'.repeat(header.length - 2) + '\n');
+          var rowsToShow = Math.min(maxRows, totalPts);
+          for (var ri = 0; ri < rowsToShow; ri++) {
+            var row = '  ' + String(xData[ri]).padEnd(20);
+            allData.forEach(function (d) {
+              var val = ri < d.y.length ? d.y[ri] : 0;
+              row += Number(val).toExponential(6).padEnd(22);
+            });
+            log(row + '\n');
+          }
+          if (totalPts > maxRows) {
+            log('  (showing ' + maxRows + ' of ' + totalPts + ' points — use export for full data)\n');
+          }
+          break;
+        }
+        case 'load': {
+          log('  Opening file dialog for .raw files...\n');
+          fileInput.accept = '.raw';
+          fileInput.click();
+          fileInput.accept = '.cir,.sp,.net,.txt,.raw';
+          break;
+        }
+        case 'source':
+        case 'run': {
+          log('  Use the Run Simulation button (▶) to simulate a netlist.\n');
+          break;
+        }
         case 'plot': {
           var tag = parts[1] || '';
-          if (!tag) { log('  Usage: plot <tag>\n', 'error'); break; }
-          var pd = JSON.parse(spiceModule.plotData(tag, ''));
+          if (!tag) { log('  Usage: plot <tag> [sig1 sig2...] [--title t]\n', 'error'); break; }
+          var ySigs = [];
+          var title = '';
+          for (var pi = 2; pi < parts.length; pi++) {
+            if (parts[pi] === '--title' && pi + 1 < parts.length) {
+              title = parts[++pi];
+            } else {
+              ySigs.push(parts[pi]);
+            }
+          }
+          var pd = JSON.parse(spiceModule.plotData(tag, ySigs.join(',')));
           if (pd.error) { log('  Error: ' + pd.error + '\n', 'error'); break; }
+          if (title) { pd.title = title; }
+          plotsData = [pd];
+          currentPlotIndex = 0;
+          updatePlotTabs();
           renderPlot(pd);
           log('  Plot rendered for "' + tag + '"\n');
           tabPlot.click();
@@ -632,25 +839,25 @@
         }
         case 'export': {
           var tag = parts[1] || '';
-          if (!tag) { log('  Usage: export <tag> [signals...]\n', 'error'); break; }
-          var csv = spiceModule.exportCSV(tag, parts.slice(2).join(','));
+          if (!tag) { log('  Usage: export <tag> [sig1 sig2...]\n', 'error'); break; }
+          var sigs = parts.slice(2).join(',');
+          var csv = spiceModule.exportCSV(tag, sigs);
           if (!csv) { log('  (no data)\n'); break; }
-          var blob = new Blob([csv], { type: 'text/csv' });
-          var url = URL.createObjectURL(blob);
-          var a = document.createElement('a');
-          a.href = url; a.download = tag + '.csv'; a.click();
-          URL.revokeObjectURL(url);
+          download(tag + '.csv', csv, 'text/csv');
           log('  Downloaded "' + tag + '.csv"\n');
           break;
         }
         case 'help': {
           log('  Commands:\n');
+          log('    load                Open .raw file for post-processing\n');
+          log('    db / records        List all loaded records\n');
+          log('    info [tag]          Show record metadata\n');
+          log('    signals / list <tag>  List signals in a record\n');
+          log('    print <tag> [sigs]  Print signal values (max 50 rows)\n');
           log('    calc <expr>         Evaluate expression (e.g. V(out)*2)\n');
-          log('    meas <type> <sig>   Measurement (e.g. max V(out))\n');
-          log('    db                  List loaded records\n');
-          log('    signals <tag>       List signals in a record\n');
-          log('    plot <tag>          Plot all signals for a record\n');
-          log('    export <tag>        Download CSV of all signals\n');
+          log('    meas <type> <sig>   Measurement (max, min, avg, rms, trise...)\n');
+          log('    plot <tag> [y1 y2]  Plot signals for a record\n');
+          log('    export <tag> [sigs] Download CSV\n');
           log('    help                Show this help\n');
           break;
         }

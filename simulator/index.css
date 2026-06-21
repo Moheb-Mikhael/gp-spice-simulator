@@ -378,6 +378,34 @@ select:focus {
     padding: 1rem;
 }
 
+/* ===== PLOT SUB-TABS ===== */
+.plot-tab-bar {
+    display: flex;
+    background-color: var(--bg-tertiary);
+    border-bottom: 1px solid var(--border);
+    overflow-x: auto;
+    flex-shrink: 0;
+}
+.plot-subtab {
+    padding: 0.5rem 1rem;
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    white-space: nowrap;
+    transition: var(--transition);
+    user-select: none;
+}
+.plot-subtab:hover {
+    color: var(--text-primary);
+    background-color: var(--bg-secondary);
+}
+.plot-subtab.active {
+    color: var(--text-primary);
+    border-bottom-color: var(--accent-gold);
+    background-color: var(--bg-secondary);
+}
+
 /* ===== DRAG-OVER STATE ===== */
 .editor-container.drag-over #netlist-editor {
     outline: 3px dashed var(--accent-gold);
