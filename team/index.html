@@ -1,0 +1,251 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>  
+<meta charset="UTF-8">  
+<meta name="viewport" content="width=device-width, initial-scale=1.0">  
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">  
+<title>Team — Arachnode</title>  
+<meta name="description" content="Meet the teams behind Arachnode — a custom circuit simulation and advanced data analytics platform.">  
+<link rel="preconnect" href="https://fonts.googleapis.com">  
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">  
+<link rel="stylesheet" href="../css/style.css?v=6">
+<style>    
+    /* Individual Member Cards Grid */
+    .team-cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 16px;
+      margin-top: 24px;
+      border-top: 1px solid var(--border);
+      padding-top: 24px;
+    }
+    .member-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 16px 12px;
+      text-align: center;
+      transition: transform 0.2s ease, border-color 0.2s ease;
+    }
+    .member-card:hover {
+      transform: translateY(-2px);
+      border-color: var(--gold);
+    }
+    .member-name {
+      font-weight: 600;
+      color: var(--text);
+      font-size: 0.95rem;
+      margin-bottom: 4px;
+    }
+    .member-role {
+      font-size: 0.8rem;
+      color: var(--gold);
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    /* Acknowledgments Section */
+    .acknowledgments-section {
+      background-color: var(--surface);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 60px 24px;
+      margin-top: 40px;
+    }
+    .acknowledgments-inner {      
+      max-width: 800px;      
+      margin: 0 auto;         
+    }    
+    .acknowledgments-inner h2 {      
+      font-family: 'Playfair Display', serif;      
+      font-size: 2rem;      
+      font-weight: 600;      
+      color: var(--gold);      
+      margin-bottom: 24px;      
+      text-align: center;    
+    }    
+    .acknowledgments-inner p {      
+      font-size: 1rem;      
+      line-height: 1.8;      
+      color: var(--text);      
+      margin-bottom: 24px;
+      text-align: center;
+    }    
+    .names-list {      
+      display: flex;      
+      flex-wrap: wrap;      
+      gap: 8px 12px;      
+      justify-content: center;      
+      margin: 32px 0;    
+    }    
+    .names-list span {      
+      font-size: 0.9rem;      
+      padding: 6px 16px;      
+      background: var(--bg);      
+      border: 1px solid var(--border);      
+      border-radius: 8px;      
+      color: var(--text);
+      font-weight: 500;
+    }  
+</style>
+</head>
+<body>  
+
+<nav id="navbar">    
+  <div class="nav-inner">      
+    <a href="../index.html" class="nav-brand">        
+      <span class="brand-accent">&#x25B3;</span>        
+      Arachnode      
+    </a>      
+    <ul class="nav-links" id="navLinks">        
+      <li><a href="../vision/index.html">Vision</a></li>        
+      <li class="nav-dropdown">          
+        <a href="#" class="nav-dropdown-trigger">Arachnode <span class="arrow">&#x25BE;</span></a>          
+        <ul class="nav-dropdown-menu">            
+          <li><a href="../about/index.html">About</a></li>            
+          <li><a href="../search/index.html">Commands</a></li>            
+          <li><a href="../tutorials/index.html">Tutorials</a></li>            
+          <li><a href="../download/index.html">Download</a></li>          
+        </ul>        
+      </li>        
+      <li class="nav-dropdown">          
+        <a href="#" class="nav-dropdown-trigger">a Question? <span class="arrow">&#x25BE;</span></a>          
+        <ul class="nav-dropdown-menu">            
+          <li><a href="../qa/index.html">Q&amp;A</a></li>            
+          <li><a href="../community/index.html">Discussions</a></li>          
+        </ul>        
+      </li>        
+      <li><a href="../team/index.html" class="active">Team</a></li>        
+      <li><a href="../simulator/index.html" target="_blank" class="nav-cta">Launch Simulator &rarr;</a></li>      
+    </ul>      
+    <button class="mobile-toggle" id="mobileToggle" aria-label="Menu">        
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">          
+        <path d="M3 12h18M3 6h18M3 18h18"/>        
+      </svg>      
+    </button>    
+  </div>  
+</nav>  
+
+<main>    
+  
+  <!-- Page Header -->
+  <section class="section intro-section">      
+    <div class="section-header">        
+      <h2>The Architecture &amp; Development Teams</h2>        
+      <div class="section-divider"></div>        
+      <p style="max-width: 800px; margin: 0 auto; text-align: center; line-height: 1.8;">
+        Arachnode was engineered by an undergraduate team from the Electronics and Electrical Communications Engineering department at Cairo University, developed under the sponsorship and technical mentorship of Si-Vision.
+      </p>      
+    </div>      
+  </section>
+
+  <!-- Team Cards Grid -->
+  <section class="section teams-section" style="padding-top: 0;">
+    <div class="about-grid">        
+      
+      <div class="about-card">          
+        <div class="icon">&#x1F3C6;</div>          
+        <h3>Founding Engineering Team</h3>          
+        <p>
+          The founding team engineered Arachnode from its inception, developing the custom simulation engine, the comprehensive analytics suite, the WebAssembly deployment architecture, and the complete web interface. Every architectural layer was systematically designed, implemented, and rigorously tested by this dedicated group.
+        </p>        
+        
+        <div class="team-cards-grid">
+          <div class="member-card">
+            <div class="member-name">Ahmed Khalaf Mohamed</div>
+            <div class="member-role">Founding Engineer</div>
+          </div>
+          <div class="member-card">
+            <div class="member-name">Erini Hosny Maher</div>
+            <div class="member-role">Founding Engineer</div>
+          </div>
+          <div class="member-card">
+            <div class="member-name">Mina Karam Fawzy</div>
+            <div class="member-role">Founding Engineer</div>
+          </div>
+          <div class="member-card">
+            <div class="member-name">Moheb Mikhael Heshmat</div>
+            <div class="member-role">Founding Engineer</div>
+          </div>
+          <div class="member-card">
+            <div class="member-name">Mostafa Magdy Mostafa</div>
+            <div class="member-role">Founding Engineer</div>
+          </div>
+          <div class="member-card">
+            <div class="member-name">Roaa Atef Mohamed</div>
+            <div class="member-role">Founding Engineer</div>
+          </div>
+          <div class="member-card">
+            <div class="member-name">Sohaila Ahmed Mohamed</div>
+            <div class="member-role">Founding Engineer</div>
+          </div>
+        </div>
+      </div>        
+
+      <div class="about-card">          
+        <div class="icon">&#x1F680;</div>          
+        <h3>Future Development Initiatives</h3>          
+        <p>
+          Arachnode is architected for continuous scalability. Future engineering cohorts will expand the simulation engine with advanced device models, specialized analysis methodologies, enhanced visualization tools, and extended evaluation capabilities—building upon the robust foundation established by the founding team.
+        </p>        
+      </div>        
+
+    </div>    
+  </section>
+
+  <!-- Acknowledgments -->
+  <section class="acknowledgments-section">  
+    <div class="acknowledgments-inner">
+      <h2>Acknowledgments</h2>  
+      <p>
+        We extend our deepest gratitude to <strong>Si-Vision</strong> for their invaluable mentorship, strategic guidance, and technical support throughout this project's lifecycle. Their weekly consultations, rigorous feedback, and commitment to excellence consistently drove our continuous improvement.
+      </p>  
+      
+      <p>We formally recognize and thank the Si-Vision engineering team members who directly supported this initiative:</p>  
+      
+      <div class="names-list">    
+        <span>Eng. Omar Haggag</span>    
+        <span>Eng. Mahmoud Salah</span>    
+        <span>Eng. Haitham Osama</span>    
+        <span>Eng. Mahmoud Abd-Al-Basit</span>    
+        <span>Eng. Sayed Shaaban</span>    
+        <span>Eng. Hossam AbdAllah</span>    
+        <span>Eng. Abdelrahman Maher</span>    
+        <span>Eng. Sara Sameh</span>    
+        <span>Eng. Sahar Adel</span>    
+        <span>Eng. Mostafa Ali</span>  
+      </div>  
+      
+      <p>
+        We also express our sincere appreciation to our academic supervisor, <strong>Dr. Mohammed Radwan</strong>, for his steadfast encouragement and invaluable academic insights.
+      </p>  
+      <p>
+        Finally, we extend our heartfelt gratitude to our families and friends for their unwavering support and patience throughout this endeavor.
+      </p>  
+    </div>
+  </section>        
+
+</main>  
+
+<footer id="footer">
+  <div class="footer-inner">      
+    <div class="footer-links">        
+      <a href="../index.html">Home</a>        
+      <a href="../about/index.html">About</a>        
+      <a href="../vision/index.html">Vision</a>        
+      <a href="../search/index.html">Commands</a>        
+      <a href="../tutorials/index.html">Tutorials</a>        
+      <a href="../download/index.html">Download</a>        
+      <a href="../qa/index.html">Q&amp;A</a>        
+      <a href="../community/index.html">Discussions</a>        
+      <a href="../team/index.html">Team</a>        
+      <a href="../simulator/index.html" target="_blank">Launch Simulator</a>      
+    </div>      
+    <div class="footer-copy">        
+      &copy; 2026 Arachnode. Available on Web (WASM) &middot; Windows &middot; Linux      
+    </div>    
+  </div>  
+</footer>  
+
+<script src="../js/main.js?v=5"></script>
+</body>
+</html>

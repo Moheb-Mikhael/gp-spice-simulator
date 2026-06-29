@@ -1,10 +1,10 @@
-# SPICE Post-Processing Suite — Egyptian EDA Hub
+﻿# SPICE Post-Processing Suite â€” Egyptian EDA Hub
 
 ## Project Status (June 12, 2026)
 
 ### What Exists
-- **C++ Simulation Engine**: `sim/` — Full SPICE-compatible circuit simulator compiled to WebAssembly via Emscripten
-- **Production Web Build**: `gp-web-release/` — Working browser-based simulator (`spice_engine.wasm`, `index.html`, `index.css`, `app.js`)
+- **C++ Simulation Engine**: `sim/` â€” Full SPICE-compatible circuit simulator compiled to WebAssembly via Emscripten
+- **Production Web Build**: `gp-web-release/` â€” Working browser-based simulator (`spice_engine.wasm`, `index.html`, `index.css`, `app.js`)
 - **Desktop Apps**: Windows and Linux native applications of the same engine (download links coming)
 - **Post-Processing Manual**: Comprehensive command reference for the SPICE Post-Processing Suite (system commands, database management, plotting, measurements, calculator)
 
@@ -20,7 +20,7 @@ A landing website that presents the tool as a step forward for EDA in Egypt:
 | Get the Tool | Platform cards: Web (launch), Windows (download placeholder), Linux (download placeholder) + quick-start netlist | Done |
 | Search | SPICE command search from `data/commands.json` (47 commands indexed) | Done |
 | Tutorials | Grid of MIT OCW videos + written guide placeholders with filter tabs | Done |
-| Q&A Community | GitHub Discussions placeholder + contact link | Done |
+| Q&A Community | Team Discussions placeholder + contact link | Done |
 | Footer | "Made in Egypt" credits + platform line | Done |
 
 ### Design
@@ -33,23 +33,23 @@ A landing website that presents the tool as a step forward for EDA in Egypt:
 - Simulator opens in a new tab (landing page is informational hub)
 - Website is the container for the online tool and a way to spread the vision
 - Desktop apps (Windows + Linux) exist but download links are placeholder until ready
-- No server needed — all static files
-- GitHub Discussions for Q&A (to be set up)
+- No server needed â€” all static files
+- Team Discussions for Q&A (to be set up)
 - MIT OCW YouTube videos for initial tutorials (placeholder)
 
 ### Files
 ```
-gp-web-release/             ← GitHub repo root (deployed to Pages)
-├── index.html              ← Landing page
-├── css/style.css           ← Landing page styles
-├── js/main.js              ← Landing page scripts
-├── data/commands.json      ← SPICE command search index
-├── PROGRESS.md             ← This file
-├── simulator/              ← Production simulator
-│   ├── index.html
-│   ├── index.css
-│   ├── app.js
-│   ├── spice_engine.js
-│   └── spice_engine.wasm
-├── .git/
+gp-web-release/             â† Team repo root (deployed to Pages)
+â”œâ”€â”€ index.html              â† Landing page
+â”œâ”€â”€ css/style.css           â† Landing page styles
+â”œâ”€â”€ js/main.js              â† Landing page scripts
+â”œâ”€â”€ data/commands.json      â† SPICE command search index
+â”œâ”€â”€ PROGRESS.md             â† This file
+â”œâ”€â”€ simulator/              â† Production simulator
+â”‚   â”œâ”€â”€ index.html
+â”‚   â”œâ”€â”€ index.css
+â”‚   â”œâ”€â”€ app.js
+â”‚   â”œâ”€â”€ spice_engine.js
+â”‚   â””â”€â”€ spice_engine.wasm
+â”œâ”€â”€ .git/
 ```

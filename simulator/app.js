@@ -655,7 +655,7 @@
     // ── PostProcess command dispatch ──────────────────────────────────────
     function executePPCommand(cmd) {
       if (!cmd || !spiceModule) return;
-      log('spice> ' + cmd + '\n');
+      log('arachnode> ' + cmd + '\n');
 
       var parts = cmd.match(/(?:[^\s"]+|"[^"]*")+/g) || [];
       var action = parts[0].toLowerCase();
