@@ -696,145 +696,6 @@
           }
           break;
         }
-        case 'db':
-        case 'records': {
-          var records = JSON.parse(spiceModule.dbRecords());
-          if (records.length === 0) { log('  (no records loaded)\n'); break; }
-          log('  Tag                    Type   Points  Signals\n');
-          log('  ' + '-'.repeat(55) + '\n');
-          records.forEach(function (r) {
-            var tag = (r.tag + '                    ').slice(0, 22);
-            var pts = String(r.numPoints);
-            var sigs = String(r.numSignals);
-            log('  ' + tag + (r.type + '      ').slice(0, 7) +
-                (pts + '      ').slice(0, 7) + sigs + '\n');
-          });
-          break;
-        }
-        case 'signals':
-        case 'list': {
-          var tag = parts[1] || '';
-          var recs = JSON.parse(spiceModule.dbRecords());
-          if (recs.length === 0) { log('  (no records loaded)\n'); break; }
-          if (!tag) {
-            var seen = {}, count = 0, typeStr = '', firstType = '';
-            for (var i = 0; i < recs.length; i++) {
-              var t = recs[i].type;
-              if (!seen[t]) {
-                seen[t] = true;
-                if (count > 0) typeStr += ', ';
-                typeStr += t;
-                if (count === 0) firstType = t;
-                count++;
-              }
-            }
-            log('  Number of analysis is ' + count + ': ' + typeStr + '\n');
-            log('    Use list <type> for signals (e.g. list ' + firstType.toLowerCase() + ')\n');
-            break;
-          }
-          var rec = resolveRecord(recs, tag);
-          if (!rec) { log('  Record not found: "' + tag + '"\n', 'error'); break; }
-          var signals = JSON.parse(spiceModule.dbSignals(rec.tag));
-          log('  Signals in "' + rec.tag + '":\n');
-          log('    ' + rec.xName + ' [X-axis]\n');
-          signals.forEach(function (s) { log('    ' + s + '\n'); });
-          break;
-        }
-        case 'info': {
-          var recs = JSON.parse(spiceModule.dbRecords());
-          if (recs.length === 0) { log('  (no records loaded)\n'); break; }
-          var tag = parts[1] || '';
-          if (!tag) {
-            var seen = {}, count = 0, typeStr = '', firstType = '';
-            for (var i = 0; i < recs.length; i++) {
-              var t = recs[i].type;
-              if (!seen[t]) {
-                seen[t] = true;
-                if (count > 0) typeStr += ', ';
-                typeStr += t;
-                if (count === 0) firstType = t;
-                count++;
-              }
-            }
-            log('  Number of analysis is ' + count + ': ' + typeStr + '\n');
-            log('    Use info <type> for details (e.g. info ' + firstType.toLowerCase() + ')\n');
-            break;
-          }
-          var rec = resolveRecord(recs, tag);
-          if (!rec) { log('  Record not found: "' + tag + '"\n', 'error'); break; }
-          log('  Tag:      ' + rec.tag + '\n');
-          log('  Type:     ' + rec.type + '\n');
-          log('  Title:    ' + (rec.title || '(none)') + '\n');
-          log('  Date:     ' + (rec.date || '(none)') + '\n');
-          log('  Points:   ' + rec.numPoints + '\n');
-          log('  X-axis:   ' + rec.xName + '\n');
-          log('  Signals:  ' + rec.numSignals + '\n');
-          log('  Complex:  ' + (rec.isComplex ? 'yes' : 'no') + '\n');
-          break;
-        }
-        case 'print': {
-          if (parts.length < 2) { log('  Usage: print <sig1> [sig2...]\n', 'error'); break; }
-          var recs = JSON.parse(spiceModule.dbRecords());
-          if (recs.length === 0) { log('  (no records loaded)\n'); break; }
-          var rec = resolveRecord(recs, parts[1]);
-          var tag, sigNames;
-          if (rec) {
-            tag = rec.tag;
-            sigNames = parts.slice(2);
-            if (sigNames.length === 0) {
-              sigNames = JSON.parse(spiceModule.dbSignals(tag));
-            }
-          } else {
-            // Auto-find record containing all requested signals
-            var candidates = parts.slice(1);
-            for (var i = 0; i < recs.length; i++) {
-              var sigs = JSON.parse(spiceModule.dbSignals(recs[i].tag));
-              var sigsLower = sigs.map(function(s) { return s.toLowerCase(); });
-              var xLower = recs[i].xName.toLowerCase();
-              var allFound = true;
-              for (var j = 0; j < candidates.length; j++) {
-                var cl = candidates[j].toLowerCase();
-                if (cl !== xLower && sigsLower.indexOf(cl) < 0) { allFound = false; break; }
-              }
-              if (allFound) { rec = recs[i]; break; }
-            }
-            if (!rec) { log('  Record not found\n', 'error'); break; }
-            tag = rec.tag;
-            sigNames = candidates;
-          }
-          if (sigNames.length === 0) { log('  (no signals in "' + tag + '")\n'); break; }
-          var maxRows = 50;
-          var totalPts = 0;
-          var allData = [];
-          // Collect X data and Y data for each signal
-          var xData = null;
-          for (var si = 0; si < sigNames.length; si++) {
-            var sd = JSON.parse(spiceModule.dbSignalData(tag, sigNames[si]));
-            if (sd.error) { log('  Error: ' + sd.error + '\n', 'error'); continue; }
-            if (!xData) xData = sd.x;
-            if (si === 0) totalPts = sd.x.length;
-            allData.push({ name: sigNames[si], y: sd.y });
-          }
-          if (!xData || allData.length === 0) break;
-          // Print header
-          var header = '  ' + (xData.length > 0 ? 'x'.padEnd(20) : '');
-          allData.forEach(function (d) { header += d.name.padEnd(22); });
-          log(header + '\n');
-          log('  ' + '-'.repeat(header.length - 2) + '\n');
-          var rowsToShow = Math.min(maxRows, totalPts);
-          for (var ri = 0; ri < rowsToShow; ri++) {
-            var row = '  ' + String(xData[ri]).padEnd(20);
-            allData.forEach(function (d) {
-              var val = ri < d.y.length ? d.y[ri] : 0;
-              row += Number(val).toExponential(6).padEnd(22);
-            });
-            log(row + '\n');
-          }
-          if (totalPts > maxRows) {
-            log('  (showing ' + maxRows + ' of ' + totalPts + ' points — use export for full data)\n');
-          }
-          break;
-        }
         case 'load': {
           log('  Opening file dialog for .raw files...\n');
           fileInput.accept = '.raw';
@@ -862,13 +723,11 @@
           if (ySigs.length === 0) { log('  Error: no Y-axis signals\n', 'error'); break; }
           var records = JSON.parse(spiceModule.dbRecords());
           if (records.length === 0) { log('  (no records loaded)\n'); break; }
-          // Find record whose xName matches xsig
           var rec = null;
           var xLower = xsig.toLowerCase();
           for (var i = 0; i < records.length; i++) {
             if (records[i].xName.toLowerCase() === xLower) { rec = records[i]; break; }
           }
-          // Fallback: match xsig as a regular signal
           if (!rec) {
             for (var i = 0; i < records.length; i++) {
               var sigs = JSON.parse(spiceModule.dbSignals(records[i].tag));
@@ -904,22 +763,18 @@
           log('  Downloaded "' + tag + '.csv"\n');
           break;
         }
-        case 'help': {
-          log('  Commands:\n');
-          log('    load                Open .raw file for post-processing\n');
-          log('    db / records        List all loaded records\n');
-          log('    info [tag]          Show record metadata\n');
-          log('    signals / list <tag>  List signals in a record\n');
-            log('    print <sig1> [sigs] Print signal values (max 50 rows)\n');
-          log('    calc <expr>         Evaluate expression (e.g. V(out)*2)\n');
-          log('    meas <type> <sig>   Measurement (max, min, avg, rms, trise...)\n');
-            log('    plot <xsig> <y1> [y2]  Plot signals vs x (auto-finds record)\n');
-          log('    export <tag> [sigs] Download CSV\n');
-          log('    help                Show this help\n');
+        default: {
+          // Route all other commands through the Interpreter (same as PC CLI)
+          try {
+            var res = JSON.parse(spiceModule.exec(cmd));
+            if (res.output) {
+              log(res.output);
+            }
+          } catch (e) {
+            log('  Error executing command: ' + e + '\n', 'error');
+          }
           break;
         }
-        default:
-          log('  Unknown command: "' + action + '". Type "help" for available commands.\n', 'error');
       }
     }
 
