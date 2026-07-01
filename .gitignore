@@ -1,6 +1,5 @@
 # Build artifacts
 sim/build/
-*.wasm
 node_modules/
 
 # OS
