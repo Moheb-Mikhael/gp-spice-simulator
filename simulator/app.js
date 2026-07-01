@@ -122,13 +122,20 @@
     var btnExportRaw = document.getElementById('btn-export-raw');
     var btnSaveLog = document.getElementById('btn-save-log');
 
+    var editorPlaceholder = document.getElementById('editor-placeholder');
+
     currentChart = echarts.init(document.getElementById('chart'));
     window.addEventListener('resize', function () { currentChart.resize(); });
 
-    editor.value = DEFAULT_NETLIST;
-    updateLineNumbers();
+    function updatePlaceholder() {
+        editorPlaceholder.classList.toggle('hidden', editor.value.trim().length > 0);
+    }
 
-    editor.addEventListener('input', updateLineNumbers);
+    editor.value = '';
+    updateLineNumbers();
+    updatePlaceholder();
+
+    editor.addEventListener('input', function () { updateLineNumbers(); updatePlaceholder(); });
     editor.addEventListener('scroll', function () {
       lineNumbers.scrollTop = editor.scrollTop;
     });
@@ -175,6 +182,7 @@
       if (EXAMPLES[e.target.value]) {
         editor.value = EXAMPLES[e.target.value];
         updateLineNumbers();
+        updatePlaceholder();
       }
     });
 
@@ -183,6 +191,9 @@
       currentChart.clear();
       plotsData = [];
       currentPlotIndex = -1;
+      editor.value = '';
+      updateLineNumbers();
+      updatePlaceholder();
       var tabBar = document.getElementById('plot-tab-bar');
       if (tabBar) { tabBar.style.display = 'none'; tabBar.innerHTML = ''; }
       tabConsole.click();
@@ -369,6 +380,7 @@
         } else {
           editor.value = content;
           updateLineNumbers();
+          updatePlaceholder();
           log('Loaded netlist from "' + file.name + '" (' + content.split('\n').length + ' lines)\n', 'success');
         }
       };

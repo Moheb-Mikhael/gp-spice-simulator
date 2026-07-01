@@ -295,6 +295,7 @@ select:focus {
     flex: 1;
     display: flex;
     overflow: hidden;
+    position: relative;
 }
 
 #line-numbers {
@@ -324,6 +325,40 @@ select:focus {
     white-space: pre;
     overflow: auto;
     caret-color: var(--editor-caret);
+}
+
+/* ===== EDITOR PLACEHOLDER ===== */
+#editor-placeholder {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+    color: var(--text-muted);
+    z-index: 1;
+}
+#editor-placeholder.hidden {
+    display: none;
+}
+.placeholder-icon {
+    font-size: 2.5rem;
+    margin-bottom: 0.75rem;
+    opacity: 0.4;
+}
+.placeholder-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    font-family: 'Inter', sans-serif;
+}
+.placeholder-sub {
+    font-size: 0.85rem;
+    opacity: 0.6;
+    text-align: center;
+    line-height: 1.6;
+    font-family: 'Inter', sans-serif;
 }
 
 /* ===== RESIZE HANDLE ===== */
