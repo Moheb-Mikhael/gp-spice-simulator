@@ -122,20 +122,13 @@
     var btnExportRaw = document.getElementById('btn-export-raw');
     var btnSaveLog = document.getElementById('btn-save-log');
 
-    var editorPlaceholder = document.getElementById('editor-placeholder');
-
     currentChart = echarts.init(document.getElementById('chart'));
     window.addEventListener('resize', function () { currentChart.resize(); });
 
-    function updatePlaceholder() {
-        editorPlaceholder.classList.toggle('hidden', editor.value.trim().length > 0);
-    }
-
-    editor.value = '';
+    editor.value = '* Write your SPICE netlist here\n';
     updateLineNumbers();
-    updatePlaceholder();
 
-    editor.addEventListener('input', function () { updateLineNumbers(); updatePlaceholder(); });
+    editor.addEventListener('input', updateLineNumbers);
     editor.addEventListener('scroll', function () {
       lineNumbers.scrollTop = editor.scrollTop;
     });
@@ -180,9 +173,8 @@
 
     selectExample.addEventListener('change', function (e) {
       if (EXAMPLES[e.target.value]) {
-        editor.value = EXAMPLES[e.target.value];
-        updateLineNumbers();
-        updatePlaceholder();
+          editor.value = EXAMPLES[e.target.value];
+          updateLineNumbers();
       }
     });
 
@@ -193,7 +185,6 @@
       currentPlotIndex = -1;
       editor.value = '';
       updateLineNumbers();
-      updatePlaceholder();
       var tabBar = document.getElementById('plot-tab-bar');
       if (tabBar) { tabBar.style.display = 'none'; tabBar.innerHTML = ''; }
       tabConsole.click();
@@ -380,7 +371,6 @@
         } else {
           editor.value = content;
           updateLineNumbers();
-          updatePlaceholder();
           log('Loaded netlist from "' + file.name + '" (' + content.split('\n').length + ' lines)\n', 'success');
         }
       };
